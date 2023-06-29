@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
+
+import { RenderService } from './render.service';
+import { AppGuard } from './app.guard';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly render: RenderService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('*')
+  getHome(@Req() request: Request): string {
+    return this.render.appRender(request);
   }
+
+  // @Get('/personal')
+  // // @UseGuards(AppGuard)
+  // getPersonal(@Req() request: Request): string {
+  //   return this.render.appRender(request);
+  // }
 }
