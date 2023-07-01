@@ -1,5 +1,4 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { Request } from 'express';
 
 import { RenderService } from './render.service';
 import { AppGuard } from './app.guard';
@@ -9,7 +8,7 @@ export class AppController {
   constructor(private readonly render: RenderService) {}
 
   @Get('*')
-  getHome(@Req() request: Request): string {
+  getHome(@Req() request: Request) {
     return this.render.appRender(request);
   }
 
