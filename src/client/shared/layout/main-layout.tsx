@@ -1,4 +1,4 @@
-import { Link } from '../../shared/lib/effector-router/react';
+import { Link } from '@client/shared/lib/effector-router/react';
 import { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { routes } from '../routing';

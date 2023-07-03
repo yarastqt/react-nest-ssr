@@ -1,39 +1,27 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { babel } from '@rollup/plugin-babel';
 import { resolve } from 'node:path';
 
 export default defineConfig({
   server: {
     port: 3000,
   },
-  plugins: [react()],
-  // optimizeDeps: {
-  //   include: ['atomic-router', 'atomic-router-react'],
-  // },
+  plugins: [
+    babel({
+      extensions: ['.ts', '.tsx'],
+      babelHelpers: 'bundled',
+      skipPreflightCheck: true,
+    }),
+    react(),
+  ],
 
   resolve: {
-    // mainFields: ['main'],
-    // extensions: ['']
-    // conditions: ['require'],
     alias: {
-      // effector: resolve(__dirname, 'node_modules/effector/effector.cjs.js'),
-      // 'effector-react/scope': resolve(
-      //   __dirname,
-      //   'node_modules/effector-react/scope.js',
-      // ),
-      // 'effector-react': resolve(
-      //   __dirname,
-      //   'node_modules/effector-react/effector-react.cjs.js',
-      // ),
+      // TODO: take from tsconfig.
+      '@client': resolve(__dirname, './src/client'),
+      '@shared': resolve(__dirname, './src/shared'),
+      '@server': resolve(__dirname, './src/server'),
     },
   },
-
-  // ssr: {
-  //   format: 'cjs',
-  //   optimizeDeps: {
-  //     include: ['atomic-router', 'atomic-router-react'],
-  //   },
-  // },
 });
-
-// https://github.com/hyze2d/fsd-vite-effector-react-template

@@ -6,7 +6,7 @@ import {
 import { sample } from 'effector';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 
-import { appStarted } from '../../shared/config';
+import { appStarted } from '@client/shared/config';
 
 export const routes = {
   home: createRoute(),

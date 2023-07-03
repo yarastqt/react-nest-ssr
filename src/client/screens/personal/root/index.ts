@@ -1,7 +1,6 @@
-import { createRouteView } from '../../../shared/lib/effector-router/react';
-
-import { routes } from '../../../../client/shared/routing';
-import { MainLayout } from '../../../../client/shared/layout/main-layout';
+import { createRouteView } from '@client/shared/lib/effector-router/react';
+import { routes } from '@client/shared/routing';
+import { MainLayout } from '@client/shared/layout/main-layout';
 
 import { PersonalRootScreen } from './personal-root.screen';
 

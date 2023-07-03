@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { Scope, createStore, version } from 'effector';
 import { Provider as EffectorProvider, useStore } from 'effector-react/scope';
 
-import { RouterProvider } from './shared/lib/effector-router/react';
+import { RouterProvider } from '@client/shared/lib/effector-router/react';
+import { router } from '@client/shared/routing';
 
 import { Screens } from './screens';
-import { router } from '../client/shared/routing';
 
 export interface ApplicationProps {
   scope: Scope;
