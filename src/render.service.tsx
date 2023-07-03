@@ -1,13 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { renderToString } from 'react-dom/server';
-import {
-  StaticRouterProvider,
-  createStaticHandler,
-  createStaticRouter,
-} from 'react-router-dom/server';
+import { readFile } from 'fs/promises';
 
-import { routes } from './client/routes';
-import { Application } from './client/application';
+import { getViteServer } from './vite-server';
+import { resolve } from 'path';
 
 // TODO: Fastrefresh для dev-сборки.
 // TODO: Клиентская сборка.
@@ -22,55 +17,23 @@ import { Application } from './client/application';
 @Injectable()
 export class RenderService {
   async appRender(request: Request) {
-    const { query, dataRoutes } = createStaticHandler(routes);
-    const context = await query(this.createFetchRequest(request));
-
-    if (context instanceof Response) {
-      throw context;
-    }
-
-    const router = createStaticRouter(dataRoutes, context);
-
-    return renderToString(
-      <Application>
-        <StaticRouterProvider router={router} context={context} />
-      </Application>,
+    const viteServer = getViteServer();
+    const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
+    let template = await viteServer.transformIndexHtml(
+      request.url,
+      rawTemplate,
     );
-  }
+    const { render } = await viteServer.ssrLoadModule(
+      'src/client/entry.server.tsx',
+    );
+    const { html, scope } = await render({ request });
 
-  private createFetchRequest(req: any) {
-    const origin = `${req.protocol}://${req.get('host')}`;
-    const url = new URL(req.originalUrl || req.url, origin);
+    template = template.replace('<!-- app-html -->', html);
+    template = template.replace(
+      '<!-- effector-scope -->',
+      `<script>window.__EFFECTOR_SCOPE__=${JSON.stringify(scope)}</script>`,
+    );
 
-    const controller = new AbortController();
-    req.on('close', () => controller.abort());
-
-    const headers = new Headers();
-
-    for (const [key, values] of Object.entries(req.headers)) {
-      if (values) {
-        if (Array.isArray(values)) {
-          for (const value of values) {
-            headers.append(key, value);
-          }
-        } else {
-          // @ts-expect-error (a)
-          headers.set(key, values);
-        }
-      }
-    }
-
-    const init = {
-      method: req.method,
-      headers,
-      signal: controller.signal,
-    };
-
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      // @ts-expect-error (a)
-      init.body = req.body;
-    }
-
-    return new Request(url.href, init);
+    return template;
   }
 }

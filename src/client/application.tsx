@@ -1,16 +1,25 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
+import { Scope, createStore, version } from 'effector';
+import { Provider as EffectorProvider, useStore } from 'effector-react/scope';
+
+import { RouterProvider } from './shared/lib/effector-router/react';
+
+import { Screens } from './screens';
+import { router } from '../client/shared/routing';
 
 export interface ApplicationProps {
-  children: ReactNode;
+  scope: Scope;
 }
 
 export const Application: FC<ApplicationProps> = (props) => {
-  const { children } = props;
+  const { scope } = props;
 
   return (
-    <div>
-      Application:
-      {children}
-    </div>
+    <EffectorProvider value={scope}>
+      <RouterProvider router={router}>
+        Render:
+        <Screens />
+      </RouterProvider>
+    </EffectorProvider>
   );
 };
