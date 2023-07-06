@@ -31,7 +31,7 @@ export class RenderService {
     template = template.replace('<!-- app-html -->', html);
     template = template.replace(
       '<!-- effector-scope -->',
-      `<script>window.__EFFECTOR_SCOPE__=${JSON.stringify(scope)}</script>`,
+      `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(scope)}</script>`,
     );
 
     return template;

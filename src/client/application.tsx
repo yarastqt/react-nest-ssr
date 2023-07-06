@@ -4,6 +4,7 @@ import { Provider as EffectorProvider, useStore } from 'effector-react/scope';
 
 import { RouterProvider } from '@client/shared/lib/effector-router/react';
 import { router } from '@client/shared/routing';
+import '@client/shared/features';
 
 import { Screens } from './screens';
 
