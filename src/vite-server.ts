@@ -2,6 +2,8 @@ import { ViteDevServer, createServer } from 'vite';
 
 let viteServer: ViteDevServer;
 
+console.log('>>> reloaded');
+
 export async function createViteServer() {
   viteServer = await createServer({
     server: { middlewareMode: true },
