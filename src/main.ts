@@ -13,6 +13,10 @@ async function bootstrap() {
   // TODO: Apply when not production.
   app.use(viteServer.middlewares);
 
-  await app.listen(3000);
+  // await app.listen(3000);
+
+  return app;
 }
-bootstrap();
+// bootstrap();
+
+export const app = bootstrap();

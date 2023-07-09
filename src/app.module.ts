@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { RenderService } from './render.service';
 
 @Module({
-  imports: [],
   controllers: [AppController],
   providers: [RenderService],
 })

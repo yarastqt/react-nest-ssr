@@ -6,6 +6,6 @@ import { PersonalRootScreen } from './personal-root.screen';
 
 export const PersonalRootRoute = {
   view: PersonalRootScreen,
-  route: chainFeatures(routes.home, { feature: 'feature-b' }),
+  route: chainFeatures(routes.personal.root, { feature: 'feature-a' }),
   layout: MainLayout,
 };

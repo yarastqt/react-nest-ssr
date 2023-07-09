@@ -5,7 +5,7 @@ import { RenderService } from './render.service';
 // @UseFilter(AppRenderFilter)
 @Controller()
 export class AppController {
-  constructor(private readonly render: RenderService) {}
+  constructor(private render: RenderService) {}
 
   @Get('/')
   getHome(@Req() request: Request) {
