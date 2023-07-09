@@ -4,7 +4,7 @@ import {
   createRouterControls,
 } from 'atomic-router';
 import { sample } from 'effector';
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 import { appStarted } from '@client/shared/config';
 
@@ -13,6 +13,7 @@ export const routes = {
   personal: {
     root: createRoute(),
   },
+  notFound: createRoute(),
 };
 
 export const controls = createRouterControls();
@@ -29,13 +30,13 @@ export const router = createHistoryRouter({
     },
   ],
   controls,
+  notFoundRoute: routes.notFound,
 });
 
 sample({
   clock: appStarted,
-  fn: () =>
-    typeof window === 'undefined'
-      ? createMemoryHistory()
-      : createBrowserHistory(),
+  // TODO: use import.meta.env.SSR
+  filter: () => typeof window !== 'undefined',
+  fn: () => createBrowserHistory(),
   target: router.setHistory,
 });

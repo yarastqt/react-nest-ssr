@@ -11,11 +11,11 @@ if (!root) {
   throw new Error('Root element not found.');
 }
 
-appStarted();
-
 const scope = fork({
   // @ts-expect-error (a)
   values: window.__EFFECTOR_SCOPE__,
 });
+
+appStarted();
 
 hydrate(<Application scope={scope} />, root);

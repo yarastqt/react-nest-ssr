@@ -9,6 +9,9 @@ export interface FeatureInfo {
 }
 
 export const $features = createStore<FeatureInfo[]>([]);
+// export const $isFeaturesLoaded = $features.map(
+//   (features) => features.length > 0,
+// );
 
 export const fetchFeaturesFx = createEffect(() => {
   return [
@@ -20,8 +23,11 @@ export const fetchFeaturesFx = createEffect(() => {
   ] as FeatureInfo[];
 });
 
+// TODO: нужно ли создавать домен, т.к. стор не будет гидрирован?
+// TODO: prevent client fetch.
 sample({
   clock: [appStarted],
+  // filter: $isFeaturesLoaded.map((isFeaturesLoaded) => !isFeaturesLoaded),
   target: fetchFeaturesFx,
 });
 

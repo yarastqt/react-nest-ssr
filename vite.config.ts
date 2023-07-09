@@ -15,7 +15,6 @@ export default defineConfig({
     }),
     react(),
   ],
-
   resolve: {
     alias: {
       // TODO: take from tsconfig.

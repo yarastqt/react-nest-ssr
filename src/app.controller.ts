@@ -2,6 +2,7 @@ import { Controller, Get, Req } from '@nestjs/common';
 
 import { RenderService } from './render.service';
 
+// @UseFilter(AppRenderFilter)
 @Controller()
 export class AppController {
   constructor(private readonly render: RenderService) {}
