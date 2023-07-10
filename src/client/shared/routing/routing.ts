@@ -16,9 +16,9 @@ export const routes = {
   notFound: createRoute(),
 };
 
-export const controls = createRouterControls();
+export const $$controls = createRouterControls();
 
-export const router = createHistoryRouter({
+export const $$router = createHistoryRouter({
   routes: [
     {
       path: '/',
@@ -29,7 +29,7 @@ export const router = createHistoryRouter({
       route: routes.personal.root,
     },
   ],
-  controls,
+  controls: $$controls,
   notFoundRoute: routes.notFound,
 });
 
@@ -38,5 +38,5 @@ sample({
   // TODO: use import.meta.env.SSR
   filter: () => typeof window !== 'undefined',
   fn: () => createBrowserHistory(),
-  target: router.setHistory,
+  target: $$router.setHistory,
 });

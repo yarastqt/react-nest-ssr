@@ -3,7 +3,7 @@ import { Scope, createStore, version } from 'effector';
 import { Provider as EffectorProvider, useStore } from 'effector-react/scope';
 
 import { RouterProvider } from '@client/shared/lib/effector-router/react';
-import { router } from '@client/shared/routing';
+import { $$router } from '@client/shared/routing';
 import '@client/shared/features';
 
 import { Screens } from './screens';
@@ -17,7 +17,7 @@ export const Application: FC<ApplicationProps> = (props) => {
 
   return (
     <EffectorProvider value={scope}>
-      <RouterProvider router={router}>
+      <RouterProvider router={$$router}>
         Render:
         <Screens />
       </RouterProvider>

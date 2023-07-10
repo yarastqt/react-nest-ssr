@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 
 import { Application } from './application';
 import { appStarted } from './shared/config';
-import { router } from './shared/routing';
+import { $$router } from './shared/routing';
 
 export interface RenderContext {
   request: Request;
@@ -19,7 +19,7 @@ export async function render(context: RenderContext) {
   history.push(request.url);
 
   await allSettled(appStarted, { scope });
-  await allSettled(router.setHistory, { scope, params: history });
+  await allSettled($$router.setHistory, { scope, params: history });
 
   // const history = scope.getState(router.$history);
 
