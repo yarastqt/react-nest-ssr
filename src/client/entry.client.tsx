@@ -4,6 +4,7 @@ import { allSettled, fork } from 'effector';
 import { appStarted } from '@client/shared/config';
 
 import { Application } from './application';
+import { HelmetProvider } from 'react-helmet-async';
 
 const root = document.getElementById('root');
 
@@ -18,4 +19,9 @@ const scope = fork({
 
 appStarted();
 // TODO: render after page is ready (like nextjs)
-hydrate(<Application scope={scope} />, root);
+hydrate(
+  <HelmetProvider>
+    <Application scope={scope} />
+  </HelmetProvider>,
+  root,
+);

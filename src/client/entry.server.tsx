@@ -1,7 +1,7 @@
 import { renderToString } from 'react-dom/server';
 import { allSettled, fork, serialize } from 'effector';
 import { createMemoryHistory } from 'history';
-import { FilledContext } from 'react-helmet-async';
+import { FilledContext, HelmetProvider } from 'react-helmet-async';
 
 import { Application } from './application';
 import { appStarted } from './shared/config';
@@ -26,7 +26,9 @@ export async function render(context: RenderContext) {
   const helmetContext = {} as FilledContext;
 
   const content = renderToString(
-    <Application scope={scope} helmetContext={helmetContext} />,
+    <HelmetProvider context={helmetContext}>
+      <Application scope={scope} />
+    </HelmetProvider>,
   );
 
   return {
