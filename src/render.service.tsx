@@ -26,14 +26,19 @@ export class RenderService {
     const { render } = await viteServer.ssrLoadModule(
       'src/client/entry.server.tsx',
     );
-    const { html, scope } = await render({ request });
+    const { content, head, scope } = await render({ request });
 
-    template = template.replace('<!-- app-html -->', html);
+    template = template.replace('<!-- app-head -->', head.title);
+    template = template.replace('<!-- app-content -->', content);
     template = template.replace(
       '<!-- effector-scope -->',
       `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(scope)}</script>`,
     );
 
     return template;
+  }
+
+  private get template() {
+    return '';
   }
 }

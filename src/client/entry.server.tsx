@@ -1,6 +1,7 @@
 import { renderToString } from 'react-dom/server';
 import { allSettled, fork, serialize } from 'effector';
 import { createMemoryHistory } from 'history';
+import { FilledContext } from 'react-helmet-async';
 
 import { Application } from './application';
 import { appStarted } from './shared/config';
@@ -22,9 +23,17 @@ export async function render(context: RenderContext) {
   await allSettled($$router.setHistory, { scope, params: history });
 
   const scopeData = serialize(scope);
+  const helmetContext = {} as FilledContext;
+
+  const content = renderToString(
+    <Application scope={scope} helmetContext={helmetContext} />,
+  );
 
   return {
-    html: renderToString(<Application scope={scope} />),
+    head: {
+      title: helmetContext.helmet.title.toString(),
+    },
+    content,
     scope: scopeData,
   };
 }
