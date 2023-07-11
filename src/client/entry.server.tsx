@@ -21,10 +21,6 @@ export async function render(context: RenderContext) {
   await allSettled(appStarted, { scope });
   await allSettled($$router.setHistory, { scope, params: history });
 
-  // const history = scope.getState(router.$history);
-
-  // history.push(request.url);
-
   const scopeData = serialize(scope);
 
   return {

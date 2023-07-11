@@ -1,5 +1,5 @@
 import { Link } from '@client/shared/lib/effector-router/react';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { routes } from '../routing';
 // import { Link } from 'react-router-dom';

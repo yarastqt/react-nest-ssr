@@ -18,6 +18,7 @@ export const routes = {
 
 export const $$controls = createRouterControls();
 
+// TODO: сделать пример с роутером и параметрами
 export const $$router = createHistoryRouter({
   routes: [
     {

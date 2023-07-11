@@ -1,5 +1,5 @@
 import { hydrate } from 'react-dom';
-import { fork } from 'effector';
+import { allSettled, fork } from 'effector';
 
 import { appStarted } from '@client/shared/config';
 
@@ -17,5 +17,5 @@ const scope = fork({
 });
 
 appStarted();
-
+// TODO: render after page is ready (like nextjs)
 hydrate(<Application scope={scope} />, root);

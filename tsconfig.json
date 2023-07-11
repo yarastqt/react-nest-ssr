@@ -24,5 +24,6 @@
       "@shared/*": ["./shared/*"],
       "@server/*": ["./server/*"]
     },
+    "types": ["vite/client"]
   }
 }

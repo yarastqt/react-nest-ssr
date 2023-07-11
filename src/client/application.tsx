@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Scope, createStore, version } from 'effector';
-import { Provider as EffectorProvider, useStore } from 'effector-react/scope';
+import { Scope } from 'effector';
+import { Provider as EffectorProvider } from 'effector-react/scope';
 
 import { RouterProvider } from '@client/shared/lib/effector-router/react';
 import { $$router } from '@client/shared/routing';
