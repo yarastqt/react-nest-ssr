@@ -1,4 +1,11 @@
-import { Controller, Get, Req, SetMetadata, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Req,
+  Res,
+  SetMetadata,
+  UseGuards,
+} from '@nestjs/common';
 import { $$router } from '@client/shared/routing';
 
 import { RenderService } from './render.service';
@@ -11,7 +18,7 @@ export class AppController {
 
   @Get('*')
   @SetMetadata('routes', new Set($$router.routes.map((route) => route.path)))
-  getHome(@Req() request: Request) {
-    return this.render.appRender(request);
+  getHome(@Req() request: Request, @Res() response: Response) {
+    return this.render.appRender({ request, response });
   }
 }

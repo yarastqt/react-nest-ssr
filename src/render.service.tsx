@@ -14,9 +14,16 @@ import { resolve } from 'path';
 // TODO: Надо сделать кастомный AuthRoute, который будет проверять из контекста условие флагов или авторизации
 // тогда мы и на клиенте и на сервере будем в одном месте хранить эту логику.
 
+export interface RenderContext {
+  request: Request;
+  response: Response;
+}
+
 @Injectable()
 export class RenderService {
-  async appRender(request: Request) {
+  async appRender(context: RenderContext) {
+    const { request, response } = context;
+
     const viteServer = getViteServer();
     const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
     let template = await viteServer.transformIndexHtml(
