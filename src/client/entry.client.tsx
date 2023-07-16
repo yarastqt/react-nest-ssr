@@ -1,5 +1,5 @@
-import { hydrate } from 'react-dom';
-import { allSettled, fork } from 'effector';
+import { hydrateRoot } from 'react-dom/client';
+import { fork } from 'effector';
 
 import { appStarted } from '@client/shared/config';
 
@@ -19,9 +19,9 @@ const scope = fork({
 
 appStarted();
 // TODO: render after page is ready (like nextjs)
-hydrate(
+hydrateRoot(
+  root,
   <HelmetProvider>
     <Application scope={scope} />
   </HelmetProvider>,
-  root,
 );
