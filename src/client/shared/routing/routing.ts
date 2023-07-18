@@ -1,8 +1,4 @@
-import {
-  createHistoryRouter,
-  createRoute,
-  createRouterControls,
-} from 'atomic-router';
+import { createHistoryRouter, createRoute } from 'atomic-router';
 import { sample } from 'effector';
 import { createBrowserHistory } from 'history';
 
@@ -12,11 +8,10 @@ export const routes = {
   home: createRoute(),
   personal: {
     root: createRoute(),
+    editor: createRoute(),
   },
   notFound: createRoute(),
 };
-
-export const $$controls = createRouterControls();
 
 // TODO: сделать пример с роутером и параметрами
 export const $$router = createHistoryRouter({
@@ -29,9 +24,14 @@ export const $$router = createHistoryRouter({
       path: '/personal',
       route: routes.personal.root,
     },
+    {
+      path: '/personal/editor',
+      route: routes.personal.editor,
+    },
   ],
-  controls: $$controls,
   notFoundRoute: routes.notFound,
+  // TODO: гидрация должна работать если запускать appStarted от скоупа.
+  // hydrate: true,
 });
 
 sample({

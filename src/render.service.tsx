@@ -42,6 +42,10 @@ export class RenderService {
 
     const result = (await render({ request })) as RenderResult;
 
+    if (result.redirect) {
+      return response.redirect(result.redirect);
+    }
+
     const chunks = template
       .replace('<!-- app-head -->', result.head.title)
       .replace(
