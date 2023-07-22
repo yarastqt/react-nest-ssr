@@ -1,5 +1,5 @@
 import { hydrateRoot } from 'react-dom/client';
-import { fork } from 'effector';
+import { allSettled, fork } from 'effector';
 
 import { appStarted } from '@client/shared/config';
 
@@ -12,16 +12,20 @@ if (!root) {
   throw new Error('Root element not found.');
 }
 
-const scope = fork({
-  // @ts-expect-error (a)
-  values: window.__EFFECTOR_SCOPE__,
-});
+async function render() {
+  const scope = fork({
+    // @ts-expect-error (a)
+    values: window.__EFFECTOR_SCOPE__,
+  });
 
-appStarted();
-// TODO: render after page is ready (like nextjs)
-hydrateRoot(
-  root,
-  <HelmetProvider>
-    <Application scope={scope} />
-  </HelmetProvider>,
-);
+  await allSettled(appStarted, { scope });
+
+  hydrateRoot(
+    root,
+    <HelmetProvider>
+      <Application scope={scope} />
+    </HelmetProvider>,
+  );
+}
+
+render();
