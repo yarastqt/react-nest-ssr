@@ -20,6 +20,10 @@ export const $$router = createHistoryRouter({
       path: '/',
       route: routes.home,
     },
+    // {
+    //   path: '/user/:userId',
+    //   route: routes.personal.root,
+    // },
     {
       path: '/personal',
       route: routes.personal.root,
