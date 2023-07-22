@@ -5,6 +5,7 @@ import { Provider as EffectorProvider } from 'effector-react/scope';
 import { RouterProvider } from '@client/shared/lib/effector-router/react';
 import { $$router } from '@client/shared/routing';
 import '@client/shared/features';
+import '@client/shared/user';
 
 import { Screens } from './screens';
 

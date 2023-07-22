@@ -22,7 +22,8 @@ export function chainFeatures<Params extends RouteParams>(
   const isFeatureEnabled = sample({
     clock: checkIsFeatureEnabled,
     source: $features,
-    filter: (features) => features.some((f) => f.name === feature && f.enabled),
+    filter: (features) =>
+      features?.some((f) => f.name === feature && f.enabled) ?? false,
   });
 
   return chainRoute({
