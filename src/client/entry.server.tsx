@@ -1,13 +1,15 @@
+import { ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { allSettled, fork, serialize } from 'effector';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { Request } from 'express';
 
+import { appStarted } from '@client/shared/config';
+import { $$router, $externalRedirectPath } from '@client/shared/routing';
+import { setI18nLang } from '@client/shared/lib/i18n';
+
 import { Application } from './application';
-import { appStarted } from './shared/config';
-import { $$router, $externalRedirectPath } from './shared/routing';
-import { ReactNode } from 'react';
 
 export interface RenderContext {
   request: Request;
@@ -22,6 +24,8 @@ export interface RenderResult {
 
 export async function render(context: RenderContext) {
   const { request } = context;
+
+  // setI18nLang('en');
 
   const scope = fork();
   const history = createMemoryHistory();
