@@ -1,25 +1,15 @@
 import { isClient } from '@shared/lib/environment';
 
-// import { i18n as _i18n } from './index';
-
-export { getI18nLang, i18n } from './index';
+export { getI18nLang, i18n, setI18nLang } from './index';
 
 const waitingSet = new Set();
 
-// export function loadKeysetChunk(keyset: any, chunkId: string) {
-//   if (isClient) {
-//     waitingSet.add(chunkId);
-//   }
-
-//   return _i18n(keyset);
-// }
-
+// TODO: импорт спрятать сюда.
 export function loadKeysetChunk(chunk: Promise<any>) {
   if (isClient) {
     waitingSet.add(chunk);
   }
 
-  // return _i18n(keyset);
   return chunk;
 }
 
