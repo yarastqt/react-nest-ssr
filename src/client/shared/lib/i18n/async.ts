@@ -20,7 +20,7 @@ export function loadKeysetChunk(chunk: Promise<any>) {
 export async function waitForReadyTranslations() {
   const locale = getLocale();
 
-  // TODO: указать тип
+  // TODO: указать тип (язык лучше указывать в APP для прозрачности)
   setI18nLang(locale as any);
 
   return new Promise<void>((resolve) => {
