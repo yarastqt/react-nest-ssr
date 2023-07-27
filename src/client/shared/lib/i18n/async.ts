@@ -1,4 +1,7 @@
+import { getLocale } from '@client/shared/config';
 import { isClient } from '@shared/lib/environment';
+
+import { setI18nLang } from './index';
 
 export { getI18nLang, i18n, setI18nLang } from './index';
 
@@ -15,6 +18,11 @@ export function loadKeysetChunk(chunk: Promise<any>) {
 
 // TODO: Можно сюда пробросить язык.
 export async function waitForReadyTranslations() {
+  const locale = getLocale();
+
+  // TODO: указать тип
+  setI18nLang(locale as any);
+
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       if (waitingSet.size === 0) {

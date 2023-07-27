@@ -1,17 +1,18 @@
-import { createEvent, createStore, sample } from 'effector';
-
-// TODO: надо подумать как быть с серверным ивентом, как его сереализовать на клиенте.
-interface AppStartedParams {
-  language: string;
-}
+import { createEvent, createStore } from 'effector';
+import { getScope } from './scope';
 
 export const appStarted = createEvent();
-export const serverStarted = createEvent<AppStartedParams>();
 
+// TOOD: rename to locale?
 export const $language = createStore('ru');
 
-sample({
-  clock: serverStarted,
-  fn: (payload) => payload.language,
-  target: $language,
-});
+// TODO: move to i18n lib
+export function getLocale() {
+  if (!$language.sid) {
+    throw new Error('Cannot get locale, because $locale.sid is null');
+  }
+
+  const locale = window.__EFFECTOR_SCOPE__[$language.sid];
+
+  return locale as string;
+}

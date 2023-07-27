@@ -1,3 +1,4 @@
+import { getLocale } from '@client/shared/config';
 import { KeysetDictionary } from '@client/shared/lib/i18n';
 import {
   getI18nLang,
@@ -17,10 +18,14 @@ export let i18n = _i18n({} as any);
 
 if (isClient) {
   // const language = getI18nLang();
-  const language = 'en';
+  // TODO: rename locale
+  const language = getLocale();
 
   loadKeysetChunk(import(`./${language}.ts`)).then((keyset) => {
     i18n = _i18n({ [language]: keyset[language] });
+
+    // const a = i18n('Поддержка');
+    // console.log('>>> a', a);
   });
 } else {
   // @ts-expect-error (TODO: Enable import meta API)

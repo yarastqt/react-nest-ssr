@@ -214,8 +214,6 @@ function _i18n(
 ): I18nRaw {
   const translation = tr(dictionary, key);
 
-  // console.log('>>> translation', dictionary, key);
-
   if (typeof translation === 'string') {
     return generateText(translation, options);
   }
