@@ -1,11 +1,12 @@
-import { FC, Suspense, lazy } from 'react';
+import { FC } from 'react';
 
 import { Button } from '@client/shared/ui-kit';
 import { Helmet } from 'react-helmet-async';
+import { loadable } from '@client/shared/lib/react-loadable';
 
 import { i18n } from './i18n';
 
-const LazyComponent = lazy(() => import('./lazy-component'));
+const LazyComponent = loadable(() => import('./lazy-component'));
 
 export const HomeScreen: FC = () => {
   return (
@@ -15,9 +16,7 @@ export const HomeScreen: FC = () => {
       </Helmet>
       home page
       <div>{i18n('Поддержка')}</div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <LazyComponent />
-      </Suspense>
+      <LazyComponent />
       <Button />
     </div>
   );
