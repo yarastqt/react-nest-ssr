@@ -1,6 +1,7 @@
-import { hydrateRoot, createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import { allSettled } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
+import { createBrowserHistory } from 'history';
 
 import { appStarted, getLocale } from '@client/shared/config';
 import {
@@ -8,6 +9,7 @@ import {
   waitForReadyTranslations,
 } from '@client/shared/lib/i18n/async';
 import { createScope } from '@client/shared/config/scope';
+import { $$router } from '@client/shared/routing';
 
 import { Application } from './application';
 
@@ -20,11 +22,14 @@ async function render() {
 
   const scope = createScope();
   const locale = getLocale();
+  const history = createBrowserHistory();
 
+  // TODO: setLocale
   setI18nLang(locale);
 
   await waitForReadyTranslations();
   await allSettled(appStarted, { scope });
+  await allSettled($$router.setHistory, { scope, params: history });
 
   hydrateRoot(
     root,

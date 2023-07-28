@@ -1,8 +1,4 @@
 import { createHistoryRouter, createRoute } from 'atomic-router';
-import { sample } from 'effector';
-import { createBrowserHistory } from 'history';
-
-import { appStarted } from '@client/shared/config';
 
 export const routes = {
   home: createRoute(),
@@ -36,13 +32,4 @@ export const $$router = createHistoryRouter({
   notFoundRoute: routes.notFound,
   // TODO: гидрация должна работать если запускать appStarted от скоупа.
   // hydrate: true,
-});
-
-// TODO: move to client.entry.tsx
-sample({
-  clock: appStarted,
-  // TODO: use import.meta.env.SSR
-  filter: () => typeof window !== 'undefined',
-  fn: () => createBrowserHistory(),
-  target: $$router.setHistory,
 });

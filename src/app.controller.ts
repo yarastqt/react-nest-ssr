@@ -22,12 +22,12 @@ export class AppController {
   // TODO: продовая сборка
   // TODO: asset-prefix
   // TODO: код-сплитинг
-  // TODO: переводы внутри асинхронных импортов
 
   @Get('*')
   // TODO: метадату можно не сетить, можно просто передать в констрруктор гарда.
   @SetMetadata('routes', new Set($$router.routes.map((route) => route.path)))
   getHome(@Req() request: Request, @Res() response: Response) {
+    // @ts-expect-error (a)
     return this.render.appRender({ request, response });
   }
 }

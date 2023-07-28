@@ -4,7 +4,6 @@ export { getI18nLang, i18n, i18nRaw, setI18nLang } from './index';
 
 const waitingSet = new Set();
 
-// TODO: импорт спрятать сюда.
 export function loadKeysetChunk(chunk: Promise<any>) {
   if (isClient) {
     waitingSet.add(chunk);
