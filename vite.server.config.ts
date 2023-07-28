@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'node:path';
 import { VitePluginNode } from 'vite-plugin-node';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: {
@@ -14,15 +14,8 @@ export default defineConfig({
       exportName: 'app',
       tsCompiler: 'swc',
     }),
+    tsconfigPaths(),
   ],
-  resolve: {
-    alias: {
-      // TODO: take from tsconfig.
-      '@client': resolve(__dirname, './src/client'),
-      '@shared': resolve(__dirname, './src/shared'),
-      '@server': resolve(__dirname, './src/server'),
-    },
-  },
   optimizeDeps: {
     exclude: ['@nestjs/microservices', '@nestjs/websockets', 'fsevents'],
   },

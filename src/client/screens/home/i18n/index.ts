@@ -1,12 +1,27 @@
 import { getLocale } from '@client/shared/config';
-import { KeysetDictionary } from '@client/shared/lib/i18n';
-import { i18n as _i18n, loadKeysetChunk } from '@client/shared/lib/i18n/async';
+import {
+  I18nOptions,
+  I18nRaw,
+  KeysetDictionary,
+} from '@client/shared/lib/i18n';
+import {
+  i18n as _i18n,
+  i18nRaw as _i18nRaw,
+  loadKeysetChunk,
+} from '@client/shared/lib/i18n/async';
 import { isClient } from '@shared/lib/environment';
 
-type KeysetType = typeof import('./ru')['ru'];
+type KeysetType = typeof import('./locale-ru')['ru'];
 
-export let i18n = _i18n({} as any);
-// export let i18nRaw = i18nRawFactory<KeysetType>(undefined, module.id);
+// TODO: выделить тип
+export let i18n = _i18n({}) as (
+  key: keyof KeysetType,
+  options?: I18nOptions,
+) => string;
+export let i18nRaw = _i18nRaw({}) as (
+  key: keyof KeysetType,
+  options?: I18nOptions,
+) => I18nRaw;
 
 // TODO: проверить как будет с динамическим импортом
 
@@ -15,6 +30,7 @@ if (isClient) {
 
   loadKeysetChunk(import(`./locale-${language}.ts`)).then((keyset) => {
     i18n = _i18n({ [language]: keyset[language] });
+    i18nRaw = _i18nRaw({ [language]: keyset[language] });
   });
 } else {
   // @ts-expect-error (TODO: Enable import meta API)
@@ -26,4 +42,5 @@ if (isClient) {
   }
 
   i18n = _i18n(keysets);
+  i18nRaw = _i18nRaw(keysets);
 }

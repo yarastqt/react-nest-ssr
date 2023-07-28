@@ -1,6 +1,6 @@
 import { isClient } from '@shared/lib/environment';
 
-export { getI18nLang, i18n, setI18nLang } from './index';
+export { getI18nLang, i18n, i18nRaw, setI18nLang } from './index';
 
 const waitingSet = new Set();
 
