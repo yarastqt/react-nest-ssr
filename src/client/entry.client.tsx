@@ -1,4 +1,4 @@
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { allSettled } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
 

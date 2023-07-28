@@ -16,6 +16,14 @@ import { RenderGuard } from './render.guard';
 export class AppController {
   constructor(private render: RenderService) {}
 
+  // TODO: Делаем ЧЕРНЫЙлист не-рендер урлов а все остальное рендерим.
+  // TODO: Рассмотреть вариант мидлвары вместо контроллера
+  // TODO: прокидывание nonce
+  // TODO: продовая сборка
+  // TODO: asset-prefix
+  // TODO: код-сплитинг
+  // TODO: переводы внутри асинхронных импортов
+
   @Get('*')
   // TODO: метадату можно не сетить, можно просто передать в констрруктор гарда.
   @SetMetadata('routes', new Set($$router.routes.map((route) => route.path)))

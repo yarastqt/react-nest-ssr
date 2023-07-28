@@ -1,4 +1,4 @@
-const LazyComponent = () => {
+export const LazyComponent = () => {
   return <div>I'm lazy</div>;
 };
 

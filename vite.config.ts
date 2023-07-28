@@ -4,9 +4,6 @@ import { babel } from '@rollup/plugin-babel';
 import { resolve } from 'node:path';
 
 export default defineConfig({
-  // server: {
-  //   port: 3000,
-  // },
   plugins: [
     babel({
       extensions: ['.ts', '.tsx'],

@@ -38,6 +38,7 @@ export const $$router = createHistoryRouter({
   // hydrate: true,
 });
 
+// TODO: move to client.entry.tsx
 sample({
   clock: appStarted,
   // TODO: use import.meta.env.SSR

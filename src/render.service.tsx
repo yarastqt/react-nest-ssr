@@ -41,6 +41,10 @@ export class RenderService {
       return response.redirect(result.redirect);
     }
 
+    // TODO: проверить отключение SSR'а.
+    // response.write(template);
+    // return response.end();
+
     const chunks = template
       .replace('<!-- app-head -->', result.head.title)
       .replace(
