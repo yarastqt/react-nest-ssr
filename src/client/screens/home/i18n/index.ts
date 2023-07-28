@@ -9,17 +9,16 @@ export let i18n = _i18n({} as any);
 // export let i18nRaw = i18nRawFactory<KeysetType>(undefined, module.id);
 
 // TODO: проверить как будет с динамическим импортом
-// TODO: разобраться с ошибкой в терминале
 
 if (isClient) {
   const language = getLocale();
 
-  loadKeysetChunk(import(`./${language}.ts`)).then((keyset) => {
+  loadKeysetChunk(import(`./locale-${language}.ts`)).then((keyset) => {
     i18n = _i18n({ [language]: keyset[language] });
   });
 } else {
   // @ts-expect-error (TODO: Enable import meta API)
-  const modules = import.meta.glob(['!./index.ts', './*.ts'], { eager: true });
+  const modules = import.meta.glob(['./locale-*.ts'], { eager: true });
   const keysets: KeysetDictionary = {};
 
   for (const keyset of Object.values(modules)) {
