@@ -1,18 +1,17 @@
 import { createEvent, createStore } from 'effector';
-import { getScope } from './scope';
+import { Language } from '../lib/i18n';
 
 export const appStarted = createEvent();
 
-// TOOD: rename to locale?
-export const $language = createStore('ru');
+export const $locale = createStore('ru');
 
 // TODO: move to i18n lib
 export function getLocale() {
-  if (!$language.sid) {
+  if (!$locale.sid) {
     throw new Error('Cannot get locale, because $locale.sid is null');
   }
 
-  const locale = window.__EFFECTOR_SCOPE__[$language.sid];
+  const locale = window.__EFFECTOR_SCOPE__[$locale.sid];
 
-  return locale as string;
+  return locale as Language;
 }

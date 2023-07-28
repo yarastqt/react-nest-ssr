@@ -7,17 +7,12 @@ import { resolve } from 'path';
 import { RenderContext, RenderResult } from '@client/entry.server';
 import { renderToPipeableStream } from 'react-dom/server';
 
-// TODO: Fastrefresh для dev-сборки.
-// TODO: Клиентская сборка.
 // TODO: сплитинг бандлов (каждый роут должен быть dynamic).
 // TODO: Линки должны быть с href, а не to.
-// TODO: Попробовать esbuild для сборки прода.
 // TODO: Добавить ErrorBoundary
 
 // TODO: Надо сделать кастомный AuthRoute, который будет проверять из контекста условие флагов или авторизации
 // тогда мы и на клиенте и на сервере будем в одном месте хранить эту логику.
-
-// https://react-v8.holt.courses/lessons/advance-react-performance/server-side-rendering
 
 export interface AppRenderContext {
   request: Request;

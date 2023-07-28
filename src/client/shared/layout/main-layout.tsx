@@ -1,11 +1,10 @@
+import { FC, ReactNode } from 'react';
+
 import { Link } from '@client/shared/lib/effector-router/react';
-import { FC, ReactNode, Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-import { routes } from '../routing';
-// import { Link } from 'react-router-dom';
+import { routes } from '@client/shared/routing';
 
 export interface MainLayoutProps {
-  // children: ReactNode;
+  children: ReactNode;
 }
 
 export const MainLayout: FC<MainLayoutProps> = (props) => {

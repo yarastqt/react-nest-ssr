@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { Request } from 'express';
 
-import { $language, appStarted } from '@client/shared/config';
+import { $locale, appStarted } from '@client/shared/config';
 import { $$router, $externalRedirectPath } from '@client/shared/routing';
 import { setI18nLang } from '@client/shared/lib/i18n';
 
@@ -24,19 +24,16 @@ export interface RenderResult {
 
 export async function render(context: RenderContext) {
   const { request } = context;
-  const language = 'en';
+  const locale = 'en';
 
-  const scope = fork({
-    values: [[$language, language]],
-  });
+  const scope = fork({ values: [[$locale, locale]] });
   const history = createMemoryHistory();
 
   history.push(request.url);
 
-  setI18nLang(language);
+  setI18nLang(locale);
 
   await allSettled(appStarted, { scope });
-  // await allSettled(serverStarted, { scope, params: { language } });
   await allSettled($$router.setHistory, { scope, params: history });
 
   const externalRedirectPath = scope.getState($externalRedirectPath);
