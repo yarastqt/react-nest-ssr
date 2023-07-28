@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { Button } from '@client/shared/ui-kit';
-import { Helmet } from 'react-helmet-async';
 import { loadable } from '@client/shared/lib/react-loadable';
 
 import { i18n } from './i18n';
