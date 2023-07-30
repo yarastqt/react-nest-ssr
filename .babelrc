@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "effector/babel-plugin",
+      {
+        "addNames": true,
+        "debugSids": true
+      }
+    ]
+  ]
+}

@@ -1,60 +1,70 @@
 import { Injectable } from '@nestjs/common';
-import { Request } from 'express';
-import { renderToString } from 'react-dom/server';
-import { Routes, Route, Link } from 'react-router-dom';
-import { StaticRouter } from 'react-router-dom/server';
+import { readFile } from 'fs/promises';
+import { Response } from 'express';
 
-const HomePage = () => {
-  return (
-    <div>
-      home page
-      <Link to={'broken'}>Not found</Link>
-    </div>
-  );
-};
+import { getViteServer } from './vite-server';
+import { resolve } from 'path';
+import { RenderContext, RenderResult } from '@client/entry.server';
+import { renderToPipeableStream } from 'react-dom/server';
 
-const PersonalPage = () => {
-  return <div>personal page</div>;
-};
-
-const NotFoundPage = () => {
-  return <div>not found page</div>;
-};
-
-// const routes = [
-//   {
-//     path: '/',
-//     component: '/'
-//   }
-// ]
-
-// TODO: Fastrefresh для dev-сборки.
-// TODO: Клиентская сборка.
 // TODO: сплитинг бандлов (каждый роут должен быть dynamic).
 // TODO: Линки должны быть с href, а не to.
-// TODO: Попробовать esbuild для сборки прода.
+// TODO: Добавить ErrorBoundary
 
 // TODO: Надо сделать кастомный AuthRoute, который будет проверять из контекста условие флагов или авторизации
 // тогда мы и на клиенте и на сервере будем в одном месте хранить эту логику.
-const Application = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/personal" element={<PersonalPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </div>
-  );
-};
 
+export interface AppRenderContext {
+  request: Request;
+  response: Response;
+}
+
+// TODO: RendererService
 @Injectable()
 export class RenderService {
-  appRender(request: Request): string {
-    return renderToString(
-      <StaticRouter location={request.url}>
-        <Application />
-      </StaticRouter>,
+  async appRender(context: AppRenderContext) {
+    const { request, response } = context;
+
+    const viteServer = getViteServer();
+    const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
+    const template = await viteServer.transformIndexHtml(
+      request.url,
+      rawTemplate,
     );
+    const { render } = await viteServer.ssrLoadModule(
+      'src/client/entry.server.tsx',
+    );
+
+    const result = (await render({ request })) as RenderResult;
+
+    if (result.redirect) {
+      return response.redirect(result.redirect);
+    }
+
+    // TODO: проверить отключение SSR'а.
+    // response.write(template);
+    // return response.end();
+
+    const chunks = template
+      .replace('<!-- app-head -->', result.head.title)
+      .replace(
+        '<!-- effector-scope -->',
+        `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(
+          result.scope,
+        )}</script>`,
+      )
+      .split('<!-- app-content -->');
+
+    response.write(chunks.at(0));
+
+    const stream = renderToPipeableStream(result.application, {
+      onShellReady: () => {
+        stream.pipe(response);
+      },
+      onAllReady: () => {
+        response.write(chunks.at(1));
+        response.end();
+      },
+    });
   }
 }

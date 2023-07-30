@@ -1,0 +1,8 @@
+.root {
+  height: 44px;
+  background: #fc0;
+}
+
+.root_isImage {
+  background-image: url('../../assets/themekit.png');
+}
