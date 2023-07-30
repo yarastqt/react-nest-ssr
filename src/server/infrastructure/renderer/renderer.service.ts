@@ -1,6 +1,6 @@
-import { resolve } from 'path';
-import { readFile } from 'fs/promises';
-import { Request, Response } from 'express';
+import { resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import type { Request, Response } from 'express';
 import { renderToPipeableStream } from 'react-dom/server';
 
 import { Injectable } from '@nestjs/common';

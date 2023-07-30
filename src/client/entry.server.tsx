@@ -7,7 +7,7 @@ import {
   HelmetProvider,
   HelmetServerState,
 } from 'react-helmet-async';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { $locale, appStarted } from '@client/shared/config';
 import { $$router, $externalRedirectPath } from '@client/shared/routing';
