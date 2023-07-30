@@ -1,37 +1,29 @@
-import { Injectable } from '@nestjs/common';
-import { readFile } from 'fs/promises';
-import { Response } from 'express';
-
-import { getViteServer } from './vite-server';
 import { resolve } from 'path';
-import { RenderContext, RenderResult } from '@client/entry.server';
+import { readFile } from 'fs/promises';
+import { Request, Response } from 'express';
 import { renderToPipeableStream } from 'react-dom/server';
 
-// TODO: сплитинг бандлов (каждый роут должен быть dynamic).
-// TODO: Линки должны быть с href, а не to.
-// TODO: Добавить ErrorBoundary
+import { Injectable } from '@nestjs/common';
+import { RenderResult } from '@client/entry.server';
 
-export interface AppRenderContext {
+import { getViteServer } from './vite-server';
+
+export interface RenderContext {
   request: Request;
   response: Response;
 }
 
 @Injectable()
 export class RendererService {
-  async render(context: AppRenderContext) {
+  async render(context: RenderContext) {
     const { request, response } = context;
 
-    const viteServer = getViteServer();
+    const vite = getViteServer();
     const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
-    const template = await viteServer.transformIndexHtml(
-      request.url,
-      rawTemplate,
-    );
-    const { render } = await viteServer.ssrLoadModule(
-      'src/client/entry.server.tsx',
-    );
+    const template = await vite.transformIndexHtml(request.url, rawTemplate);
+    const { render } = await vite.ssrLoadModule('src/client/entry.server.tsx');
 
-    const result = (await render({ request })) as RenderResult;
+    const result: RenderResult = await render(context);
 
     if (result.context.redirect) {
       return response.redirect(result.context.redirect);

@@ -1,4 +1,4 @@
-import { getLocale } from '@client/shared/config';
+import { getSharedLocale } from '@client/shared/config';
 import {
   I18nOptions,
   I18nRaw,
@@ -26,7 +26,7 @@ export let i18nRaw = _i18nRaw({}) as (
 // TODO: проверить как будет с динамическим импортом
 
 if (isClient) {
-  const locale = getLocale();
+  const locale = getSharedLocale();
 
   loadKeysetChunk(import(`./locale-${locale}.ts`)).then((keyset) => {
     i18n = _i18n({ [locale]: keyset[locale] });

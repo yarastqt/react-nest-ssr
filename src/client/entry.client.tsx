@@ -3,7 +3,7 @@ import { allSettled } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserHistory } from 'history';
 
-import { appStarted, getLocale } from '@client/shared/config';
+import { appStarted, getSharedLocale } from '@client/shared/config';
 import {
   setI18nLang,
   waitForReadyTranslations,
@@ -21,7 +21,7 @@ async function render() {
   }
 
   const scope = createScope();
-  const locale = getLocale();
+  const locale = getSharedLocale();
   const history = createBrowserHistory();
 
   // TODO: setLocale
