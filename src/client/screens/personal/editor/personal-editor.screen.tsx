@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
-import { DocumentTitle } from '@client/shared/document';
+import { Title } from '@client/shared/document';
 
 import './model';
 
 export const PersonalEditorScreen: FC = () => {
   return (
     <div>
-      <DocumentTitle>Personal editor page</DocumentTitle>
+      <Title>Personal editor page</Title>
       personal editor page
     </div>
   );

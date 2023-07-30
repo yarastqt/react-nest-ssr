@@ -5,12 +5,12 @@ export interface DocumentTitleProps {
   children: ReactNode;
 }
 
-export const DocumentTitle: FC<DocumentTitleProps> = (props) => {
+export const Title: FC<DocumentTitleProps> = (props) => {
   const { children } = props;
 
   return (
     <Helmet>
-      <title>{children}e</title>
+      <title>{children}</title>
     </Helmet>
   );
 };

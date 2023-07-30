@@ -8,13 +8,13 @@ import {
 } from '@nestjs/common';
 import { $$router } from '@client/shared/routing';
 
-import { RenderService } from './render.service';
+import { RendererService } from './renderer.service';
 import { RenderGuard } from './render.guard';
 
 @Controller()
 @UseGuards(RenderGuard)
 export class AppController {
-  constructor(private render: RenderService) {}
+  constructor(private renderer: RendererService) {}
 
   // TODO: Делаем ЧЕРНЫЙлист не-рендер урлов а все остальное рендерим.
   // TODO: Рассмотреть вариант мидлвары вместо контроллера
@@ -27,6 +27,6 @@ export class AppController {
   @SetMetadata('routes', new Set($$router.routes.map((route) => route.path)))
   getHome(@Req() request: Request, @Res() response: Response) {
     // @ts-expect-error (a)
-    return this.render.appRender({ request, response });
+    return this.renderer.render({ request, response });
   }
 }

@@ -11,18 +11,14 @@ import { renderToPipeableStream } from 'react-dom/server';
 // TODO: Линки должны быть с href, а не to.
 // TODO: Добавить ErrorBoundary
 
-// TODO: Надо сделать кастомный AuthRoute, который будет проверять из контекста условие флагов или авторизации
-// тогда мы и на клиенте и на сервере будем в одном месте хранить эту логику.
-
 export interface AppRenderContext {
   request: Request;
   response: Response;
 }
 
-// TODO: RendererService
 @Injectable()
-export class RenderService {
-  async appRender(context: AppRenderContext) {
+export class RendererService {
+  async render(context: AppRenderContext) {
     const { request, response } = context;
 
     const viteServer = getViteServer();
@@ -37,8 +33,8 @@ export class RenderService {
 
     const result = (await render({ request })) as RenderResult;
 
-    if (result.redirect) {
-      return response.redirect(result.redirect);
+    if (result.context.redirect) {
+      return response.redirect(result.context.redirect);
     }
 
     // TODO: проверить отключение SSR'а.
@@ -46,14 +42,25 @@ export class RenderService {
     // return response.end();
 
     const chunks = template
-      .replace('<!-- app-head -->', result.head.title)
       .replace(
-        '<!-- effector-scope -->',
-        `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(
-          result.scope,
-        )}</script>`,
+        '<!-- app-head -->',
+        [
+          result.context.helmet.meta.toString(),
+          result.context.helmet.title.toString(),
+        ].join(''),
       )
-      .split('<!-- app-content -->');
+      .replace(
+        '<!-- app-data -->',
+        [
+          `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(
+            result.context.effectorData,
+          )}</script>`,
+          `<script>window.__SHARED_DATA__ = ${JSON.stringify(
+            result.context.sharedData,
+          )}</script>`,
+        ].join(''),
+      )
+      .split('<!-- app-shell -->');
 
     response.write(chunks.at(0));
 

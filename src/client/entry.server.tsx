@@ -2,7 +2,11 @@ import { ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { allSettled, fork, serialize } from 'effector';
 import { createMemoryHistory } from 'history';
-import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import {
+  FilledContext,
+  HelmetProvider,
+  HelmetServerState,
+} from 'react-helmet-async';
 import { Request } from 'express';
 
 import { $locale, appStarted } from '@client/shared/config';
@@ -17,12 +21,15 @@ export interface RenderContext {
 
 export interface RenderResult {
   application: ReactNode;
-  scope: any;
-  head: any;
-  redirect: string | null;
+  context: {
+    effectorData: Record<string, unknown>;
+    helmet: HelmetServerState;
+    redirect: string | null;
+    sharedData: Record<string, unknown>;
+  };
 }
 
-export async function render(context: RenderContext) {
+export async function render(context: RenderContext): Promise<RenderResult> {
   const { request } = context;
   const locale = 'en';
 
@@ -51,15 +58,11 @@ export async function render(context: RenderContext) {
 
   return {
     application,
-    // TODO: reanme to context
-    head: {
-      title: helmetContext.helmet.title.toString(),
-    },
-    scope: scopeData,
-    redirect: externalRedirectPath,
-
     context: {
+      effectorData: scopeData,
       helmet: helmetContext.helmet,
+      redirect: externalRedirectPath,
+      sharedData: { locale },
     },
   };
 }
