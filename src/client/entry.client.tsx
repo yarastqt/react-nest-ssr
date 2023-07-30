@@ -3,12 +3,15 @@ import { allSettled } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserHistory } from 'history';
 
-import { appStarted, getSharedLocale } from '@client/shared/config';
+import {
+  createScope,
+  appStarted,
+  getSharedLocale,
+} from '@client/shared/config';
 import {
   setI18nLang,
   waitForReadyTranslations,
 } from '@client/shared/lib/i18n/async';
-import { createScope } from '@client/shared/config/scope';
 import { $$router } from '@client/shared/routing';
 
 import { Application } from './application';
