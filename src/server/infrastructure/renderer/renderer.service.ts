@@ -5,8 +5,7 @@ import { renderToPipeableStream } from 'react-dom/server';
 
 import { Injectable } from '@nestjs/common';
 import { RenderResult } from '@client/entry.server';
-
-import { getViteServer } from './vite-server';
+import { getViteServer } from '@server/infrastructure/vite';
 
 export interface RenderContext {
   request: Request;
@@ -28,10 +27,6 @@ export class RendererService {
     if (result.context.redirect) {
       return response.redirect(result.context.redirect);
     }
-
-    // TODO: проверить отключение SSR'а.
-    // response.write(template);
-    // return response.end();
 
     const chunks = template
       .replace(

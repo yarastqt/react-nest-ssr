@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class RenderGuard implements CanActivate {
+export class RendererGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(

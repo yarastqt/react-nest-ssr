@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 
+import { createViteServer } from '@server/infrastructure/vite';
+
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './app.filter';
-import { createViteServer } from './vite-server';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

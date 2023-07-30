@@ -9,18 +9,12 @@ import {
 import { $$router } from '@client/shared/routing';
 
 import { RendererService } from './renderer.service';
-import { RenderGuard } from './render.guard';
+import { RendererGuard } from './renderer.guard';
 
 @Controller()
-@UseGuards(RenderGuard)
-export class AppController {
+@UseGuards(RendererGuard)
+export class RendererController {
   constructor(private renderer: RendererService) {}
-
-  // TODO: Делаем ЧЕРНЫЙлист не-рендер урлов а все остальное рендерим.
-  // TODO: Рассмотреть вариант мидлвары вместо контроллера
-  // TODO: прокидывание nonce
-  // TODO: продовая сборка
-  // TODO: код-сплитинг (страниц)
 
   @Get('*')
   // TODO: метадату можно не сетить, можно просто передать в констрруктор гарда.

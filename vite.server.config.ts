@@ -17,7 +17,7 @@ export default defineConfig({
   plugins: [
     ...VitePluginNode({
       adapter: 'nest',
-      appPath: './src/main.ts',
+      appPath: './src/server/main.ts',
       exportName: 'app',
       tsCompiler: 'swc',
     }),

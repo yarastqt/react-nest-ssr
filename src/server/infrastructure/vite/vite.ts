@@ -1,16 +1,16 @@
 import { ViteDevServer, createServer } from 'vite';
 
-let viteServer: ViteDevServer;
+let vite: ViteDevServer;
 
 export async function createViteServer() {
-  viteServer = await createServer({
+  vite = await createServer({
     server: { middlewareMode: true },
     appType: 'custom',
   });
 
-  return viteServer;
+  return vite;
 }
 
 export function getViteServer() {
-  return viteServer;
+  return vite;
 }
