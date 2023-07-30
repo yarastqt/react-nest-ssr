@@ -1,14 +1,13 @@
 import { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
+
+import { DocumentTitle } from '@client/shared/document';
 
 import './model';
 
 export const PersonalEditorScreen: FC = () => {
   return (
     <div>
-      <Helmet>
-        <title>Personal editor page</title>
-      </Helmet>
+      <DocumentTitle>Personal editor page</DocumentTitle>
       personal editor page
     </div>
   );

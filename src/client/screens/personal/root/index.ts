@@ -7,6 +7,6 @@ import { PersonalRootScreen } from './personal-root.screen';
 // https://github.com/sanyuan0704/vite-plugin-chunk-split
 export const PersonalRootRoute = {
   view: PersonalRootScreen,
-  route: chainFeatures(routes.personal.root, { feature: 'feature-a' }),
+  route: chainFeatures({ feature: 'feature-a' })(routes.personal.root),
   layout: MainLayout,
 };

@@ -1,14 +1,12 @@
 import { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import ThemekitImage from '@client/shared/assets/themekit.png';
+import { DocumentTitle } from '@client/shared/document';
 
 export const PersonalRootScreen: FC = () => {
   return (
     <div>
-      <Helmet>
-        <title>Personal page</title>
-      </Helmet>
+      <DocumentTitle>Personal page</DocumentTitle>
       <img src={ThemekitImage} width={400} />
       personal root page
     </div>

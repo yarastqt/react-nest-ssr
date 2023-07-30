@@ -13,23 +13,24 @@ export interface ChainParams<_Params extends RouteParams> {
 }
 
 export function chainFeatures<Params extends RouteParams>(
-  route: RouteInstance<Params>,
   chainParams: ChainParams<Params>,
-): RouteInstance<Params> {
-  const { feature } = chainParams;
+) {
+  return (route: RouteInstance<Params>) => {
+    const { feature } = chainParams;
 
-  const featureCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
+    const featureCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
 
-  const isFeatureEnabled = sample({
-    clock: featureCheckStarted,
-    source: $features,
-    filter: (features) =>
-      features?.some((f) => f.name === feature && f.enabled) ?? false,
-  });
+    const isFeatureEnabled = sample({
+      clock: featureCheckStarted,
+      source: $features,
+      filter: (features) =>
+        features?.some((f) => f.name === feature && f.enabled) ?? false,
+    });
 
-  return chainRoute({
-    route,
-    beforeOpen: featureCheckStarted,
-    openOn: isFeatureEnabled,
-  });
+    return chainRoute({
+      route,
+      beforeOpen: featureCheckStarted,
+      openOn: isFeatureEnabled,
+    });
+  };
 }
