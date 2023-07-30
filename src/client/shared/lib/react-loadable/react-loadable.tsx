@@ -1,5 +1,5 @@
 import { ComponentType, FC, Suspense, lazy } from 'react';
-import { waitForReadyTranslations } from '../i18n/async';
+import { waitForReadyTranslations } from '@client/shared/lib/i18n/async';
 
 export function loadable<T extends ComponentType>(
   factory: () => Promise<{ default: T }>,

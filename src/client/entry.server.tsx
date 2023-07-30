@@ -51,10 +51,15 @@ export async function render(context: RenderContext) {
 
   return {
     application,
+    // TODO: reanme to context
     head: {
       title: helmetContext.helmet.title.toString(),
     },
     scope: scopeData,
-    redirect: externalRedirectPath ?? null,
+    redirect: externalRedirectPath,
+
+    context: {
+      helmet: helmetContext.helmet,
+    },
   };
 }

@@ -7,6 +7,13 @@ export default defineConfig({
     port: 3000,
     strictPort: true,
   },
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       format: 'module',
+  //     },
+  //   },
+  // },
   plugins: [
     ...VitePluginNode({
       adapter: 'nest',

@@ -5,7 +5,8 @@ import {
   chainRoute,
 } from 'atomic-router';
 import { createEvent, sample } from 'effector';
-import { $features } from './features';
+
+import { $features } from '@client/shared/features';
 
 export interface ChainParams<_Params extends RouteParams> {
   feature: string;
@@ -17,10 +18,10 @@ export function chainFeatures<Params extends RouteParams>(
 ): RouteInstance<Params> {
   const { feature } = chainParams;
 
-  const checkIsFeatureEnabled = createEvent<RouteParamsAndQuery<Params>>();
+  const featureCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
 
   const isFeatureEnabled = sample({
-    clock: checkIsFeatureEnabled,
+    clock: featureCheckStarted,
     source: $features,
     filter: (features) =>
       features?.some((f) => f.name === feature && f.enabled) ?? false,
@@ -28,7 +29,7 @@ export function chainFeatures<Params extends RouteParams>(
 
   return chainRoute({
     route,
-    beforeOpen: checkIsFeatureEnabled,
+    beforeOpen: featureCheckStarted,
     openOn: isFeatureEnabled,
   });
 }
