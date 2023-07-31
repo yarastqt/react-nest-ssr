@@ -33,3 +33,5 @@ export const $$router = createHistoryRouter({
   // TODO: гидрация должна работать если запускать appStarted от скоупа.
   // hydrate: true,
 });
+
+export const routerPaths = $$router.routes.map((route) => route.path);
