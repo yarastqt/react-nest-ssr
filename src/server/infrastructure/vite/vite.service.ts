@@ -18,11 +18,6 @@ export class ViteService {
 
   getDevServer() {
     assert(this.vite, 'Vite server is not created');
-    assert(
-      // @ts-expect-error (Enable import meta API)
-      import.meta.env.PROD,
-      'Vite server is not access for production mode',
-    );
 
     return this.vite;
   }
