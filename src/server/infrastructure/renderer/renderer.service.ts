@@ -5,7 +5,7 @@ import { renderToPipeableStream } from 'react-dom/server';
 
 import { Injectable } from '@nestjs/common';
 import { RenderResult } from '@client/entry.server';
-import { getViteServer } from '@server/infrastructure/vite';
+import { ViteService } from '@server/infrastructure/vite';
 
 export interface RenderContext {
   request: Request;
@@ -14,10 +14,12 @@ export interface RenderContext {
 
 @Injectable()
 export class RendererService {
+  constructor(private vite: ViteService) {}
+
   async render(context: RenderContext) {
     const { request, response } = context;
 
-    const vite = getViteServer();
+    const vite = this.vite.getDevServer();
     const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
     const template = await vite.transformIndexHtml(request.url, rawTemplate);
     const { render } = await vite.ssrLoadModule('src/client/entry.server.tsx');
