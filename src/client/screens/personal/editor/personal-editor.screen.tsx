@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Title } from '@client/shared/document';
+import { Title } from '@client/shared/lib/document';
 
 import './model';
 

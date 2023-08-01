@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Button } from '@client/shared/ui-kit';
 import { loadable } from '@client/shared/lib/react-loadable';
-import { Title } from '@client/shared/document';
+import { Meta, Title } from '@client/shared/lib/document';
 
 import { i18n } from './i18n';
 
@@ -12,6 +12,7 @@ export const HomeScreen: FC = () => {
   return (
     <div>
       <Title>Home page</Title>
+      <Meta name="robots" content="noindex" />
       home page
       <div>{i18n('Поддержка')}</div>
       <LazyComponent />

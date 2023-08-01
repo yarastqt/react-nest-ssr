@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import ThemekitImage from '@client/shared/assets/themekit.png';
-import { Title } from '@client/shared/document';
+import { Title } from '@client/shared/lib/document';
 
 export const PersonalRootScreen: FC = () => {
   return (
