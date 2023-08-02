@@ -5,21 +5,21 @@ export const routes = {
   personal: {
     root: createRoute(),
     editor: createRoute(),
+    user: createRoute<{ userId: string }>(),
   },
   notFound: createRoute(),
 };
 
-// TODO: сделать пример с роутером и параметрами
 export const $$router = createHistoryRouter({
   routes: [
     {
       path: '/',
       route: routes.home,
     },
-    // {
-    //   path: '/user/:userId',
-    //   route: routes.personal.root,
-    // },
+    {
+      path: '/personal/user/:userId',
+      route: routes.personal.user,
+    },
     {
       path: '/personal',
       route: routes.personal.root,
