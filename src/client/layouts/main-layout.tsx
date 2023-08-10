@@ -15,8 +15,11 @@ export const MainLayout: FC<MainLayoutProps> = (props) => {
       Main layout:
       <Link to={routes.home}>Home</Link>
       <Link to={routes.personal.root}>Personal</Link>
-      <Link to={routes.personal.user} params={{ userId: '100500' }}>
+      <Link to={routes.personal.user} params={{ userId: '100' }}>
         User
+      </Link>
+      <Link to={routes.personal.user} params={{ userId: '200' }}>
+        User2
       </Link>
       <Link to="/broken">Not found</Link>
       {children}
