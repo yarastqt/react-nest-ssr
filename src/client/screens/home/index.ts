@@ -6,7 +6,7 @@ import {
 } from '@client/shared/routing';
 import { MainLayout } from '@client/shared/layout/main-layout';
 
-import { HomeScreen } from './home.screen';
+import { HomeScreen } from './home-screen';
 
 export const HomeRoute = {
   view: HomeScreen,
