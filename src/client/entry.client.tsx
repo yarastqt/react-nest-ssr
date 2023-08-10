@@ -1,4 +1,4 @@
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { allSettled } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserHistory } from 'history';
@@ -17,10 +17,10 @@ import { $$router } from '@client/shared/routing';
 import { Application } from './application';
 
 async function render() {
-  const root = document.getElementById('root');
+  const container = document.getElementById('root');
 
-  if (!root) {
-    throw new Error('Root element not found.');
+  if (!container) {
+    throw new Error('Container element not found.');
   }
 
   const scope = createScope();
@@ -34,12 +34,17 @@ async function render() {
   await allSettled(appStarted, { scope });
   await allSettled($$router.setHistory, { scope, params: history });
 
-  hydrateRoot(
-    root,
+  const application = (
     <HelmetProvider>
       <Application scope={scope} />
-    </HelmetProvider>,
+    </HelmetProvider>
   );
+
+  if (container.childNodes.length === 0) {
+    createRoot(container).render(application);
+  } else {
+    hydrateRoot(container, application);
+  }
 }
 
 render();

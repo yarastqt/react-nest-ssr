@@ -24,7 +24,21 @@ export class RendererService {
     const template = await vite.transformIndexHtml(request.url, rawTemplate);
     const { render } = await vite.ssrLoadModule('src/client/entry.server.tsx');
 
-    const result: RenderResult = await render(context);
+    if (request.query.ssr === 'false') {
+      return response.send(
+        template.replace(
+          '<!-- app-data -->',
+          [
+            `<script>window.__EFFECTOR_SCOPE__ = {};</script>`,
+            `<script>window.__SHARED_DATA__ = ${JSON.stringify({
+              locale: 'en',
+            })};</script>`,
+          ].join('\n'),
+        ),
+      );
+    }
+
+    const result: RenderResult = await render({ ...context });
 
     if (result.context.redirect) {
       return response.redirect(result.context.redirect);
@@ -36,18 +50,18 @@ export class RendererService {
         [
           result.context.helmet.meta.toString(),
           result.context.helmet.title.toString(),
-        ].join(''),
+        ].join('\n'),
       )
       .replace(
         '<!-- app-data -->',
         [
           `<script>window.__EFFECTOR_SCOPE__ = ${JSON.stringify(
             result.context.effectorData,
-          )}</script>`,
+          )};</script>`,
           `<script>window.__SHARED_DATA__ = ${JSON.stringify(
             result.context.sharedData,
-          )}</script>`,
-        ].join(''),
+          )};</script>`,
+        ].join('\n'),
       )
       .split('<!-- app-shell -->');
 
@@ -61,6 +75,10 @@ export class RendererService {
         response.write(chunks.at(1));
         response.end();
       },
+    });
+
+    response.on('close', () => {
+      stream.abort();
     });
   }
 }

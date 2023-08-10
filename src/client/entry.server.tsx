@@ -35,6 +35,7 @@ export async function render(context: RenderContext): Promise<RenderResult> {
 
   const scope = fork({ values: [[$locale, locale]] });
   const history = createMemoryHistory();
+  const helmetContext = {} as FilledContext;
 
   history.push(request.url);
 
@@ -44,7 +45,6 @@ export async function render(context: RenderContext): Promise<RenderResult> {
   await allSettled($$router.setHistory, { scope, params: history });
 
   const externalRedirectPath = scope.getState($externalRedirectPath);
-  const helmetContext = {} as FilledContext;
 
   const application = (
     <HelmetProvider context={helmetContext}>
@@ -62,7 +62,7 @@ export async function render(context: RenderContext): Promise<RenderResult> {
       effectorData: scopeData,
       helmet: helmetContext.helmet,
       redirect: externalRedirectPath,
-      sharedData: { locale },
+      sharedData: { locale, ssr: true },
     },
   };
 }
