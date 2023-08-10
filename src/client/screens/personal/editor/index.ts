@@ -1,5 +1,5 @@
 import { routes } from '@client/shared/routing';
-import { MainLayout } from '@client/shared/layout/main-layout';
+import { MainLayout } from '@client/layouts/main-layout';
 
 import { PersonalEditorScreen } from './personal-editor-screen';
 

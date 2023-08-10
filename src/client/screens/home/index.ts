@@ -4,7 +4,7 @@ import {
   chainAuth,
   chain,
 } from '@client/shared/routing';
-import { MainLayout } from '@client/shared/layout/main-layout';
+import { MainLayout } from '@client/layouts/main-layout';
 
 import { HomeScreen } from './home-screen';
 
