@@ -12,3 +12,5 @@ export const PersonalEditorScreen: FC = () => {
     </div>
   );
 };
+
+export default PersonalEditorScreen;

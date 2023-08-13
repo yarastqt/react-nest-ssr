@@ -12,3 +12,5 @@ export const PersonalRootScreen: FC = () => {
     </div>
   );
 };
+
+export default PersonalRootScreen;

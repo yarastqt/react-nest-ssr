@@ -20,3 +20,5 @@ export const HomeScreen: FC = () => {
     </div>
   );
 };
+
+export default HomeScreen;

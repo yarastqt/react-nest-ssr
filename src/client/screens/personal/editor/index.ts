@@ -1,10 +1,9 @@
 import { routes } from '@client/shared/routing';
 import { MainLayout } from '@client/layouts/main-layout';
+import { createLazyRoute } from '@client/shared/lib/effector-router-lazy';
 
-import { PersonalEditorScreen } from './personal-editor-screen';
-
-export const PersonalEditorRoute = {
-  view: PersonalEditorScreen,
+export const PersonalEditorRoute = createLazyRoute({
+  view: () => import('./personal-editor-screen'),
   route: routes.personal.editor,
   layout: MainLayout,
-};
+});

@@ -1,12 +1,9 @@
 import { routes, chainFeatures } from '@client/shared/routing';
 import { MainLayout } from '@client/layouts/main-layout';
+import { createLazyRoute } from '@client/shared/lib/effector-router-lazy';
 
-import { PersonalRootScreen } from './personal-root-screen';
-
-// TODO: make async route (loadable/component)
-// https://github.com/sanyuan0704/vite-plugin-chunk-split
-export const PersonalRootRoute = {
-  view: PersonalRootScreen,
+export const PersonalRootRoute = createLazyRoute({
+  view: () => import('./personal-root-screen'),
   route: chainFeatures({ feature: 'feature-a' })(routes.personal.root),
   layout: MainLayout,
-};
+});

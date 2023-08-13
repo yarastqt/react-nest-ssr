@@ -5,15 +5,14 @@ import {
   chain,
 } from '@client/shared/routing';
 import { MainLayout } from '@client/layouts/main-layout';
+import { createLazyRoute } from '@client/shared/lib/effector-router-lazy';
 
-import { HomeScreen } from './home-screen';
-
-export const HomeRoute = {
-  view: HomeScreen,
+export const HomeRoute = createLazyRoute({
+  view: () => import('./home-screen'),
   // TODO: example with feature not available for current region.
   route: chain(
     chainAuth(),
     chainFeatures({ feature: 'feature-a' }),
   )(routes.home),
   layout: MainLayout,
-};
+});

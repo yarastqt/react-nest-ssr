@@ -1,7 +1,7 @@
 import { ComponentType, FC, Suspense, lazy } from 'react';
 import { waitForReadyTranslations } from '@client/shared/lib/i18n/async';
 
-export function loadable<T extends ComponentType>(
+export function loadable<Props, T extends ComponentType>(
   factory: () => Promise<{ default: T }>,
 ) {
   const Component = lazy(async () => {
@@ -11,7 +11,7 @@ export function loadable<T extends ComponentType>(
     return component;
   });
 
-  const LazyComponent: FC = (props: any) => {
+  const LazyComponent: FC<Props> = (props: any) => {
     return (
       <Suspense fallback={null}>
         <Component {...props} />
