@@ -3,6 +3,8 @@ import { FC, ReactNode } from 'react';
 import { Link } from '@client/shared/lib/effector-router/react';
 import { routes } from '@client/shared/routing';
 
+import styles from './main-layout.module.css';
+
 export interface MainLayoutProps {
   children: ReactNode;
 }
@@ -11,7 +13,7 @@ export const MainLayout: FC<MainLayoutProps> = (props) => {
   const { children } = props;
 
   return (
-    <div>
+    <div className={styles.root}>
       Main layout:
       <Link to={routes.home}>Home</Link>
       <Link to={routes.personal.root}>Personal</Link>
