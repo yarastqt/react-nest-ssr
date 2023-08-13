@@ -8,7 +8,10 @@
   "scripts": {
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --config vite.server.config.ts --outDir dist/server",
-    "build:ssr": "vite build --outDir dist/server --ssr src/client/entry.server.tsx",
+    "build:ssr": "vite build --outDir dist/server --ssr src/client/entry-server.tsx",
+    "build": "npm run cleanup && npm run build:client && npm run build:server && npm run build:ssr",
+    "cleanup": "rm -rf ./dist",
+    "start:prod": "NODE_ENV=production node ./dist/server/main.mjs",
     "start": "vite --config vite.server.config.ts"
   },
   "dependencies": {

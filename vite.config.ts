@@ -6,6 +6,23 @@ import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
 
 export default defineConfig({
+  build: {
+    emptyOutDir: false,
+
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'src/index.html'),
+      },
+      // output: {
+      //   assetFileNames:
+      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].[ext]',
+      //   chunkFileNames:
+      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
+      //   entryFileNames:
+      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
+      // },
+    },
+  },
   plugins: [
     babel({
       babelHelpers: 'bundled',
@@ -14,19 +31,4 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
   ],
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'src/index.html'),
-      },
-      output: {
-        assetFileNames:
-          'https://yastatic.net/s3/yandex-id-static/[name]-[hash].[ext]',
-        chunkFileNames:
-          'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
-        entryFileNames:
-          'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
-      },
-    },
-  },
 });

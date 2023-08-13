@@ -4,8 +4,9 @@ import type { Request, Response } from 'express';
 import { renderToPipeableStream } from 'react-dom/server';
 
 import { Injectable } from '@nestjs/common';
-import { RenderResult } from '@client/entry.server';
+import type { RenderResult } from '@client/entry-server';
 import { ViteService } from '@server/infrastructure/vite';
+import { isProduction } from '@shared/lib/environment';
 
 export interface RenderContext {
   request: Request;
@@ -19,10 +20,23 @@ export class RendererService {
   async render(context: RenderContext) {
     const { request, response } = context;
 
-    const vite = this.vite.getDevServer();
-    const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
-    const template = await vite.transformIndexHtml(request.url, rawTemplate);
-    const { render } = await vite.ssrLoadModule('src/client/entry.server.tsx');
+    let template, render;
+
+    if (isProduction) {
+      const serverEntry = resolve(
+        process.cwd(),
+        'dist/server/entry-server.mjs',
+      );
+
+      template = await readFile(resolve('src/index.html'), 'utf-8');
+      render = (await import(serverEntry)).render;
+    } else {
+      const vite = this.vite.getDevServer();
+      const rawTemplate = await readFile(resolve('src/index.html'), 'utf-8');
+
+      template = await vite.transformIndexHtml(request.url, rawTemplate);
+      render = (await vite.ssrLoadModule('src/client/entry-server')).render;
+    }
 
     if (request.query.ssr === 'false') {
       return response.send(
@@ -38,7 +52,7 @@ export class RendererService {
       );
     }
 
-    const result: RenderResult = await render({ ...context });
+    const result: RenderResult = await render(context);
 
     if (result.context.redirect) {
       return response.redirect(result.context.redirect);
@@ -81,4 +95,8 @@ export class RendererService {
       stream.abort();
     });
   }
+
+  private loadDocument() {}
+
+  private loadServerRender() {}
 }

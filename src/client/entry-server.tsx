@@ -62,7 +62,7 @@ export async function render(context: RenderContext): Promise<RenderResult> {
       effectorData: scopeData,
       helmet: helmetContext.helmet,
       redirect: externalRedirectPath,
-      sharedData: { locale, ssr: true },
+      sharedData: { locale },
     },
   };
 }
