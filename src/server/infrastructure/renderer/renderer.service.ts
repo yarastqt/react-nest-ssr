@@ -23,12 +23,13 @@ export class RendererService {
     let template, render;
 
     if (isProduction) {
-      const serverEntry = resolve(
-        process.cwd(),
-        'dist/server/entry-server.mjs',
-      );
+      const rootDir = resolve(process.cwd(), 'build');
+      const serverEntry = resolve(rootDir, 'server/entry-server.mjs');
 
-      template = await readFile(resolve('src/index.html'), 'utf-8');
+      template = await readFile(
+        resolve(rootDir, 'client/src/index.html'),
+        'utf-8',
+      );
       render = (await import(serverEntry)).render;
     } else {
       const vite = this.vite.getDevServer();

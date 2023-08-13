@@ -5,9 +5,10 @@ import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
 
-export default defineConfig({
+export default defineConfig(({ ssrBuild }) => ({
   build: {
     emptyOutDir: false,
+    outDir: ssrBuild ? './build/server' : './build/client',
 
     rollupOptions: {
       input: {
@@ -31,4 +32,4 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
   ],
-});
+}));
