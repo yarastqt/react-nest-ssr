@@ -6,15 +6,19 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --config vite.server.config.ts --outDir dist/server",
-    "build:ssr": "vite build --outDir dist/server --ssr src/client/entry.server.tsx",
+    "build:client": "vite build --config vite.config.ts",
+    "build:server": "vite build --config vite.server.config.ts",
+    "build:ssr": "vite build --config vite.config.ts --ssr src/client/entry-server.tsx",
+    "build": "npm run cleanup && npm run build:client && npm run build:server && npm run build:ssr",
+    "cleanup": "rm -rf ./build",
+    "start:prod": "NODE_ENV=production node ./build/server/main.mjs",
     "start": "vite --config vite.server.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/serve-static": "4.0.0",
     "atomic-router": "0.8.0",
     "clsx": "2.0.0",
     "effector": "22.8.6",

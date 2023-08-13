@@ -1,24 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 
 import { ViteService } from '@server/infrastructure/vite';
+import { isProduction } from '@shared/lib/environment';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './app.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const viteService = app.get(ViteService);
-  const vite = await viteService.createDevServer();
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // TODO: Apply when not production.
-  app.use(vite.middlewares);
+  if (isProduction) {
+    app.listen(3000);
+  } else {
+    const viteService = app.get(ViteService);
+    const vite = await viteService.createDevServer();
 
-  // await app.listen(3000);
+    app.use(vite.middlewares);
+  }
 
   return app;
 }
-// bootstrap();
 
 export const app = bootstrap();
