@@ -23,8 +23,6 @@ export let i18nRaw = _i18nRaw({}) as (
   options?: I18nOptions,
 ) => I18nRaw;
 
-// TODO: проверить как будет с динамическим импортом
-
 if (isClient) {
   const locale = getSharedLocale();
 
@@ -33,7 +31,6 @@ if (isClient) {
     i18nRaw = _i18nRaw({ [locale]: keyset[locale] });
   });
 } else {
-  // @ts-expect-error (TODO: Enable import meta API)
   const modules = import.meta.glob(['./locale-*.ts'], { eager: true });
   const keysets: KeysetDictionary = {};
 

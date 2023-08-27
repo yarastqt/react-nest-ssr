@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "jsx": "react-jsx",
     "declaration": true,
@@ -9,14 +9,10 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
-    "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
-    // "strictNullChecks": false,
-    // "noImplicitAny": false,
-    // "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "baseUrl": "./src",

@@ -31,7 +31,6 @@ if (isClient) {
     i18nRaw = _i18nRaw({ [locale]: keyset[locale] });
   });
 } else {
-  // @ts-expect-error (TODO: Enable import meta API)
   const modules = import.meta.glob(['./locale-*.ts'], { eager: true });
   const keysets: KeysetDictionary = {};
 

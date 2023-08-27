@@ -1,3 +1,3 @@
-export const isClient = typeof window !== 'undefined';
-export const isServer = typeof window === 'undefined';
+export const isClient = !import.meta.env.SSR;
+export const isServer = import.meta.env.SSR;
 export const isProduction = process.env.NODE_ENV === 'production';
