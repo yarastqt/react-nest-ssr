@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'node:path';
+import legacy from '@vitejs/plugin-legacy';
 
 import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
@@ -25,6 +26,9 @@ export default defineConfig(({ ssrBuild }) => ({
     },
   },
   plugins: [
+    legacy({
+      targets: ['defaults', 'not IE 11'],
+    }),
     babel({
       babelHelpers: 'bundled',
       extensions: ['.ts', '.tsx'],
