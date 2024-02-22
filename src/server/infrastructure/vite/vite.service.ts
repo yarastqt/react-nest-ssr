@@ -9,7 +9,7 @@ export class ViteService {
 
   async createDevServer() {
     this.vite = await createServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, hmr: true },
       appType: 'custom',
     });
 

@@ -1,32 +1,16 @@
-import { IndexHtmlTransformResult, defineConfig } from 'vite';
+import { defineConfig, IndexHtmlTransformResult } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'node:path';
 import legacy from '@vitejs/plugin-legacy';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
+import { viteExternalsPlugin } from 'vite-plugin-externals'
 
-export default defineConfig(({ ssrBuild }) => ({
-  build: {
-    emptyOutDir: false,
-    outDir: ssrBuild ? './build/server' : './build/client',
+export default defineConfig(({ ssrBuild, mode }) => {
+  const isDevMode = mode === 'development';
 
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'src/index.html'),
-      },
-      // output: {
-      //   assetFileNames:
-      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].[ext]',
-      //   chunkFileNames:
-      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
-      //   entryFileNames:
-      //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
-      // },
-    },
-  },
-  plugins: [
+  const plugins = [
     legacy({
       targets: ['defaults', 'not IE 11'],
     }),
@@ -36,10 +20,37 @@ export default defineConfig(({ ssrBuild }) => ({
     }),
     react(),
     tsconfigPaths(),
-    injectExternalReactWithDom(),
-    viteExternalsPlugin({ react: 'React', 'react-dom': 'ReactDOM' }),
-  ],
-}));
+  ];
+
+  if (!isDevMode) {
+    plugins.push(
+      injectExternalReactWithDom(),
+      viteExternalsPlugin({ react: 'React', 'react-dom': 'ReactDOM' }),
+    )
+  }
+
+  return {
+    build: {
+      emptyOutDir: false,
+      outDir: ssrBuild ? './build/server' : './build/client',
+
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'src/index.html'),
+        },
+        // output: {
+        //   assetFileNames:
+        //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].[ext]',
+        //   chunkFileNames:
+        //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
+        //   entryFileNames:
+        //     'https://yastatic.net/s3/yandex-id-static/[name]-[hash].js',
+        // },
+      },
+    },
+    plugins,
+  }
+});
 
 function injectExternalReactWithDom() {
   return {
