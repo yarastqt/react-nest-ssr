@@ -1,8 +1,7 @@
-import { IndexHtmlTransformResult, defineConfig } from 'vite';
+import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'node:path';
 import legacy from '@vitejs/plugin-legacy';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
@@ -36,25 +35,5 @@ export default defineConfig(({ ssrBuild }) => ({
     }),
     react(),
     tsconfigPaths(),
-    injectExternalReactWithDom(),
-    viteExternalsPlugin({ react: 'React', 'react-dom': 'ReactDOM' }),
   ],
 }));
-
-function injectExternalReactWithDom() {
-  return {
-    name: 'html-transform',
-    transformIndexHtml: (html: string): IndexHtmlTransformResult => ({
-      html,
-      tags: [
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://yastatic.net/react/18.2.0/react-with-dom.min.js',
-          },
-          injectTo: 'head-prepend',
-        },
-      ],
-    }),
-  };
-}
