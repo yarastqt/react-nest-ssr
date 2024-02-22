@@ -1,11 +1,9 @@
-import { createRoutesView } from '@client/shared/lib/effector-router/react';
-
 import { HomeRoute } from './home';
 import { NotFoundScreen } from './not-found';
 import { PersonalEditorRoute } from './personal/editor';
 import { PersonalRootRoute } from './personal/root';
 import { PersonalUserRoute } from './personal/user';
-import { BundledRoute } from './bundled'
+import { createRoutesView } from 'atomic-router-react'
 
 export const Screens = createRoutesView({
   routes: [
@@ -13,7 +11,6 @@ export const Screens = createRoutesView({
     PersonalEditorRoute,
     PersonalRootRoute,
     PersonalUserRoute,
-    BundledRoute,
   ],
   otherwise: NotFoundScreen,
 });

@@ -1,11 +1,11 @@
 import { ComponentType } from 'react';
 import { RouteParams } from 'atomic-router';
 
-import { RouteRecord } from '@client/shared/lib/effector-router/react';
 import { loadable } from '@client/shared/lib/react-loadable';
 import { isClient } from '@shared/lib/environment';
 import { getScope } from '@client/shared/config';
 import { scopeBind } from 'effector';
+import { RouteRecord } from 'atomic-router-react'
 
 interface LazyRouteConfig<
   Props,

@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 
-import { Link } from '@client/shared/lib/effector-router/react';
 import { routes } from '@client/shared/routing';
 
 import styles from './main-layout.module.css';
+import { Link } from 'atomic-router-react'
 
 export interface MainLayoutProps {
   children: ReactNode;

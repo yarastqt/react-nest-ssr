@@ -20,6 +20,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/serve-static": "4.0.0",
     "atomic-router": "0.10.1",
+    "atomic-router-react": "^0.10.0",
     "clsx": "2.0.0",
     "effector": "23.2.0",
     "effector-react": "23.2.0",
