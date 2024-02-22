@@ -7,8 +7,8 @@ import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
 import { viteExternalsPlugin } from 'vite-plugin-externals'
 
-export default defineConfig(({ ssrBuild }) => {
-  const isDevMode = process.env.NODE_ENV === 'development';
+export default defineConfig(({ ssrBuild, mode }) => {
+  const isDevMode = mode === 'development';
 
   const plugins = [
     legacy({
