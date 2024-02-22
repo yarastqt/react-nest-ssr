@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react'
 import { RouteInstance, RouteParams } from 'atomic-router';
 
 import { useIsOpened } from './use-is-opened';
@@ -6,6 +6,7 @@ import { useIsOpened } from './use-is-opened';
 export interface RouteViewConfig<Props, Params extends RouteParams> {
   route: RouteInstance<Params> | RouteInstance<Params>[];
   view: React.ComponentType<Props>;
+  layout?: FC<{ children: ReactNode }>;
   otherwise?: React.ComponentType<Props>;
 }
 
@@ -19,27 +20,30 @@ export function createRouteView<
     >[key];
   },
 >(config: Config) {
-  return (
-    props: Props & Omit<RouteViewConfig<Props, Params>, keyof Config>,
-  ) => {
-    const mergedConfig = { ...config, ...props } as RouteViewConfig<
-      Props,
-      Params
-    >;
-    const isOpened = useIsOpened(mergedConfig.route);
+  return {
+    ...config,
+    view: (
+      props: Props & Omit<RouteViewConfig<Props, Params>, keyof Config>,
+    ) => {
+      const mergedConfig = { ...config, ...props } as RouteViewConfig<
+        Props,
+        Params
+      >;
+      const isOpened = useIsOpened(mergedConfig.route);
 
-    if (isOpened) {
-      const View = mergedConfig.view;
+      if (isOpened) {
+        const View = mergedConfig.view;
 
-      return <View {...props} />;
-    }
+        return <View {...props} />;
+      }
 
-    if (mergedConfig.otherwise) {
-      const Otherwise = mergedConfig.otherwise;
+      if (mergedConfig.otherwise) {
+        const Otherwise = mergedConfig.otherwise;
 
-      return <Otherwise {...props} />;
-    }
+        return <Otherwise {...props} />;
+      }
 
-    return null;
+      return null;
+    },
   };
 }

@@ -8,9 +8,12 @@ export const routes = {
     user: createRoute<{ userId: string }>(),
   },
   notFound: createRoute(),
+  bundled: createRoute(),
 };
 
-export const $$router = createHistoryRouter({
+type RouterObject = ReturnType<typeof createHistoryRouter>;
+
+export const $$router: RouterObject = createHistoryRouter({
   routes: [
     {
       path: '/',
@@ -27,6 +30,10 @@ export const $$router = createHistoryRouter({
     {
       path: '/personal/editor',
       route: routes.personal.editor,
+    },
+    {
+      path: '/bundled',
+      route: routes.bundled,
     },
   ],
   notFoundRoute: routes.notFound,

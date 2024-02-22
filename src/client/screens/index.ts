@@ -5,6 +5,7 @@ import { NotFoundScreen } from './not-found';
 import { PersonalEditorRoute } from './personal/editor';
 import { PersonalRootRoute } from './personal/root';
 import { PersonalUserRoute } from './personal/user';
+import { BundledRoute } from './bundled'
 
 export const Screens = createRoutesView({
   routes: [
@@ -12,6 +13,7 @@ export const Screens = createRoutesView({
     PersonalEditorRoute,
     PersonalRootRoute,
     PersonalUserRoute,
+    BundledRoute,
   ],
   otherwise: NotFoundScreen,
 });
