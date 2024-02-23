@@ -1,11 +1,11 @@
 import { ComponentType } from 'react';
-import { RouteParams } from 'atomic-router';
+import { RouteParams, RouteParamsAndQuery } from 'atomic-router'
 
-import { RouteRecord } from '@client/shared/lib/effector-router/react';
 import { loadable } from '@client/shared/lib/react-loadable';
 import { isClient } from '@shared/lib/environment';
 import { getScope } from '@client/shared/config';
-import { scopeBind } from 'effector';
+import { EventCallable, scopeBind } from 'effector'
+import { RouteRecord } from 'atomic-router-react'
 
 interface LazyRouteConfig<
   Props,
@@ -35,8 +35,9 @@ export function createLazyRoute<
         const scope = getScope();
         const params = scope.getState(config.route.$params);
         const query = scope.getState(config.route.$query);
+        const opened = config.route.opened as EventCallable<RouteParamsAndQuery<Params>>;
 
-        scopeBind(config.route.opened, { scope })({ params, query });
+        scopeBind(opened, { scope })({ params, query });
       }
 
       return view;

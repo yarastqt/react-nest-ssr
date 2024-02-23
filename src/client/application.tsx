@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { Scope } from 'effector';
-import { Provider as EffectorProvider } from 'effector-react/scope';
+import { Provider as EffectorProvider } from 'effector-react';
 
-import { RouterProvider } from '@client/shared/lib/effector-router/react';
 import { $$router } from '@client/shared/routing';
 import '@client/shared/features';
 import '@client/shared/user';
 
 import { Screens } from './screens';
+import { RouterProvider } from 'atomic-router-react'
 
 export interface ApplicationProps {
   scope: Scope;

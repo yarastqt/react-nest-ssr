@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useUnit } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 
 import { Title } from '@client/shared/lib/document';
 import * as model from './model';
