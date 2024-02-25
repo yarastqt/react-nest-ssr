@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 import { RendererService } from '@server/infrastructure/renderer/renderer.service'
 
 @Catch()
-export class ServeStaticExceptionFilter implements ExceptionFilter {
+export class GlobalExceptionFilter implements ExceptionFilter {
   constructor(private rendererService: RendererService) {}
 
   catch(exception: any, host: ArgumentsHost) {
@@ -16,33 +16,25 @@ export class ServeStaticExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    if (exception.code === "ENOENT") {
-      void this.rendererService.render({ response, request });
-      return;
+    if (exception instanceof HttpException) {
+      const status = exception.getStatus();
+
+      if (status === 404) {
+        void this.rendererService.render({ response, request });
+        return;
+      }
+
+      response.status(status).json({
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        fake: true,
+      });
+    } else {
+      if (exception.code === "ENOENT") {
+        void this.rendererService.render({ response, request });
+        return;
+      }
     }
-  }
-}
-
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  constructor(private rendererService: RendererService) {}
-
-  catch(exception: HttpException, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
-
-    if (status === 404) {
-      void this.rendererService.render({ response, request });
-      return;
-    }
-
-    response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      fake: true,
-    });
   }
 }
