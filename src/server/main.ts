@@ -4,14 +4,14 @@ import { ViteService } from '@server/infrastructure/vite';
 import { isProduction } from '@shared/lib/environment';
 
 import { AppModule } from './app.module';
-import { HttpExceptionFilter, ServeStaticExceptionFilter } from './app.filter'
+import { GlobalExceptionFilter } from './app.filter'
 import { RendererService } from '@server/infrastructure/renderer/renderer.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const service = app.get<RendererService>(RendererService);
 
-  app.useGlobalFilters(new HttpExceptionFilter(service), new ServeStaticExceptionFilter(service));
+  app.useGlobalFilters(new GlobalExceptionFilter(service));
 
   if (isProduction) {
     await app.listen(3000);
