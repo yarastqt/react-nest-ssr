@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 import type { RenderResult } from '@client/entry-server';
 import { ViteService } from '@server/infrastructure/vite';
 import { isProduction } from '@shared/lib/environment';
+import { Transform } from 'node:stream'
 
 export interface RenderContext {
   request: Request;
@@ -84,11 +85,18 @@ export class RendererService {
 
     const stream = renderToPipeableStream(result.application, {
       onShellReady: () => {
-        stream.pipe(response);
-      },
-      onAllReady: () => {
-        response.write(chunks.at(1));
-        response.end();
+        const transformStream = new Transform({
+          transform(chunk, encoding, callback) {
+            response.write(chunk, encoding);
+            callback();
+          },
+        });
+
+        transformStream.on('finish', () => {
+          response.end(chunks.at(1));
+        });
+
+        stream.pipe(transformStream);
       },
     });
 
