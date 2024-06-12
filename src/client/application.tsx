@@ -7,7 +7,7 @@ import '@client/shared/features';
 import '@client/shared/user';
 
 import { Screens } from './screens';
-import { RouterProvider } from 'atomic-router-react'
+import { RouterProvider } from 'atomic-router-react';
 
 export interface ApplicationProps {
   scope: Scope;

@@ -1,5 +1,5 @@
-import { getSharedLocale } from '@client/shared/config';
 import {
+  getSharedLocale,
   I18nOptions,
   I18nRaw,
   KeysetDictionary,

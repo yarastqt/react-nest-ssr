@@ -1,11 +1,10 @@
 import { ComponentType } from 'react';
-import { RouteParams, RouteParamsAndQuery } from 'atomic-router'
+import { RouteParams, RouteParamsAndQuery } from 'atomic-router';
 
 import { loadable } from '@client/shared/lib/react-loadable';
 import { isClient } from '@shared/lib/environment';
-import { getScope } from '@client/shared/config';
-import { EventCallable, scopeBind } from 'effector'
-import { RouteRecord } from 'atomic-router-react'
+import { EventCallable, scopeBind } from 'effector';
+import { RouteRecord } from 'atomic-router-react';
 
 interface LazyRouteConfig<
   Props,
@@ -24,18 +23,23 @@ export function createLazyRoute<
 ): RouteRecord<Props, Params> {
   return {
     ...config,
-    view: loadable<Props, Component>(async () => {
+    view: loadable<Props, Component>(async (scope) => {
       const view = await config.view();
+
+      if (!scope) {
+        throw new Error('Empty scope is not supported.');
+      }
 
       if (isClient) {
         if (Array.isArray(config.route)) {
-          throw new Error('...');
+          throw new Error('Multiply routes are not supported.');
         }
 
-        const scope = getScope();
         const params = scope.getState(config.route.$params);
         const query = scope.getState(config.route.$query);
-        const opened = config.route.opened as EventCallable<RouteParamsAndQuery<Params>>;
+        const opened = config.route.opened as EventCallable<
+          RouteParamsAndQuery<Params>
+        >;
 
         scopeBind(opened, { scope })({ params, query });
       }

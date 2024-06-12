@@ -30,6 +30,7 @@ import arPlural from './plural/ar';
 import swPlural from './plural/sw';
 import urPlural from './plural/ur';
 import amPlural from './plural/am';
+import { assert } from '@shared/lib/assert';
 
 export interface IPluralForms {
   one: string;
@@ -246,6 +247,14 @@ export function getI18nLangs() {
   return _langs;
 }
 
+export function getSharedLocale() {
+  const locale = window.__SHARED_DATA__.locale;
+
+  assert(locale, 'Locale not provided from server data.');
+
+  return locale as Language;
+}
+
 export function resolveI18nLang(
   languages: string[],
   requestLang: Language,
@@ -268,3 +277,5 @@ export function resolveI18nLang(
 
   return language;
 }
+
+export { $locale } from './effector';

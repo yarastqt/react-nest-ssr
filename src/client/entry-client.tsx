@@ -1,13 +1,9 @@
 import { hydrateRoot, createRoot } from 'react-dom/client';
-import { allSettled } from 'effector';
+import { allSettled, fork } from 'effector';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserHistory } from 'history';
 
-import {
-  createScope,
-  appStarted,
-  getSharedLocale,
-} from '@client/shared/config';
+import { appStarted } from '@client/shared/config';
 import {
   setI18nLang,
   waitForReadyTranslations,
@@ -15,6 +11,7 @@ import {
 import { $$router } from '@client/shared/routing';
 
 import { Application } from './application';
+import { getSharedLocale } from '@client/shared/lib/i18n';
 
 async function render() {
   const container = document.getElementById('root');
@@ -23,7 +20,10 @@ async function render() {
     throw new Error('Container element not found.');
   }
 
-  const scope = createScope();
+  const scope = fork({
+    values: window.__EFFECTOR_SCOPE__,
+  });
+
   const locale = getSharedLocale();
   const history = createBrowserHistory();
 
@@ -31,6 +31,7 @@ async function render() {
   setI18nLang(locale);
 
   await waitForReadyTranslations();
+
   await allSettled(appStarted, { scope });
   await allSettled($$router.setHistory, { scope, params: history });
 
