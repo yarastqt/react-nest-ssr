@@ -9,11 +9,11 @@ import {
 } from 'react-helmet-async';
 import type { Request } from 'express';
 
-import { $locale, appStarted } from '@client/shared/config';
 import { $$router, $externalRedirectPath } from '@client/shared/routing';
-import { setI18nLang } from '@client/shared/lib/i18n';
+import { $locale, setI18nLang } from '@client/shared/lib/i18n';
 
 import { Application } from './application';
+import { appStarted } from '@client/shared/config';
 
 export interface RenderContext {
   request: Request;
