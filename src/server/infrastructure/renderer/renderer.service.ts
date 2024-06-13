@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import type { RenderResult } from '@client/entry-server';
 import { ViteService } from '@server/infrastructure/vite';
 import { isProduction } from '@shared/lib/environment';
-import { Transform } from 'node:stream'
+import { Transform } from 'node:stream';
 
 export interface RenderContext {
   request: Request;
@@ -104,8 +104,4 @@ export class RendererService {
       stream.abort();
     });
   }
-
-  private loadDocument() {}
-
-  private loadServerRender() {}
 }

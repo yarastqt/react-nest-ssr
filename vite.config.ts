@@ -1,11 +1,11 @@
-import { defineConfig, IndexHtmlTransformResult } from 'vite'
+import { defineConfig, IndexHtmlTransformResult } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'node:path';
 import legacy from '@vitejs/plugin-legacy';
 
 import react from '@vitejs/plugin-react';
 import { babel } from '@rollup/plugin-babel';
-import { viteExternalsPlugin } from 'vite-plugin-externals'
+import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 export default defineConfig(({ ssrBuild, mode }) => {
   const isDevMode = mode === 'development';
@@ -26,7 +26,7 @@ export default defineConfig(({ ssrBuild, mode }) => {
     plugins.push(
       injectExternalReactWithDom(),
       viteExternalsPlugin({ react: 'React', 'react-dom': 'ReactDOM' }),
-    )
+    );
   }
 
   return {
@@ -49,7 +49,7 @@ export default defineConfig(({ ssrBuild, mode }) => {
       },
     },
     plugins,
-  }
+  };
 });
 
 function injectExternalReactWithDom() {

@@ -3,9 +3,9 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-} from '@nestjs/common'
+} from '@nestjs/common';
 import { Request, Response } from 'express';
-import { RendererService } from '@server/infrastructure/renderer/renderer.service'
+import { RendererService } from '@server/infrastructure/renderer/renderer.service';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -31,7 +31,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         fake: true,
       });
     } else {
-      if (exception.code === "ENOENT") {
+      if (exception.code === 'ENOENT') {
         void this.rendererService.render({ response, request });
         return;
       }

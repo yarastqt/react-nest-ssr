@@ -11,6 +11,9 @@ export default defineConfig(() => ({
     emptyOutDir: false,
     outDir: './build/server',
   },
+  commonjsOptions: {
+    esmExternals: true,
+  },
   plugins: [
     ...VitePluginNode({
       adapter: 'nest',
@@ -22,5 +25,13 @@ export default defineConfig(() => ({
   ],
   optimizeDeps: {
     exclude: ['@nestjs/microservices', '@nestjs/websockets', 'fsevents'],
+  },
+  test: {
+    deps: {
+      interopDefault: true,
+    },
+    environment: 'node',
+    reporters: 'default',
+    include: ['**/*.e2e-spec.ts'],
   },
 }));
