@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react';
 import { routes } from '@client/shared/routing';
 
 import styles from './main-layout.module.css';
-import { Link } from 'atomic-router-react'
+import { Link } from 'atomic-router-react';
 
 export interface MainLayoutProps {
   children: ReactNode;

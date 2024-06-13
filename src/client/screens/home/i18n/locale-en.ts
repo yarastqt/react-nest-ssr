@@ -1,3 +1,3 @@
 export const en = {
-    "Поддержка": "Support"
+  Поддержка: 'Support',
 };

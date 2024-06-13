@@ -8,12 +8,12 @@ import { createEvent, sample } from 'effector';
 
 import { $features } from '@client/shared/features';
 
-export interface ChainParams<_Params extends RouteParams> {
+export interface ChainParams {
   feature: string;
 }
 
 export function chainFeatures<Params extends RouteParams>(
-  chainParams: ChainParams<Params>,
+  chainParams: ChainParams,
 ) {
   return (route: RouteInstance<Params>) => {
     const { feature } = chainParams;
