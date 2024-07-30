@@ -9,7 +9,7 @@
     "build:client": "vite build --config vite.config.ts",
     "build:server": "vite build --config vite.server.config.ts",
     "build:ssr": "vite build --config vite.config.ts --ssr src/client/entry-server.tsx",
-    "build": "pnpm cleanup && pnpm build:client && pnpm build:server && pnpm build:ssr",
+    "build": "npm run cleanup && npm run build:client && npm run build:server && npm run build:ssr",
     "cleanup": "rm -rf ./build",
     "start:prod": "NODE_ENV=production node ./build/server/main.mjs",
     "start": "vite --config vite.server.config.ts",
